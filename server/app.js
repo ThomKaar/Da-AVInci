@@ -5,13 +5,12 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 // For authorize
-var jwt = require('jsonwebtoken');
 var bodyParser = require('body-parser');
 
-var indexRouter = require('./routes/index');
-var accountRouter = require('./routes/account');
-
-var authRouter = require('./routes/auth');
+//var indexRouter = require('./routes/index');
+//var accountRouter = require('./routes/account');
+var categoryRouter =require('./routes/category');
+var itemRouter = require('./routes/item');
 
 var app = express();
 // view engine setup
@@ -27,9 +26,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use('/', indexRouter);
-app.use('/account', accountRouter);
-app.use('/auth', authRouter);
+// app.use('/', indexRouter);
+//app.use('/account', accountRouter);
+app.use('/category',  categoryRouter);
+app.use('/item', itemRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
