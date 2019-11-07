@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export class CateoryProvider {
+export class CategoryProvider {
     constructor() {}
 
 	getCateoryById(id){
@@ -11,6 +11,12 @@ export class CateoryProvider {
 
 	getAllCategories(){
 		return axios.get('/api/art/all').then((responses) => {
+			return responses.data;
+		});
+	}
+
+	getCategoryItems(){
+		return axios.get('/api/category/all').then((responses) => {		
 			return responses.data;
 		});
 	}
