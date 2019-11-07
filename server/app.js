@@ -11,6 +11,7 @@ var bodyParser = require('body-parser');
 //var accountRouter = require('./routes/account');
 var categoryRouter =require('./routes/category');
 var itemRouter = require('./routes/item');
+var imageRouter = require('./routes/image');
 
 var app = express();
 // view engine setup
@@ -30,6 +31,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 //app.use('/account', accountRouter);
 app.use('/category',  categoryRouter);
 app.use('/item', itemRouter);
+app.use('/image', imageRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

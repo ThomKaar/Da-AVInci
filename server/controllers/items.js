@@ -47,3 +47,28 @@ exports.getItemByIdReq = async(req, res) => {
     }
 };
 
+exports.getItemTitle = async(req, res) => {
+    try {
+        var params = {
+            "TableName": "Item",
+            "Key": {
+                "id": {
+                    "N": "11"
+                }
+            },
+        };
+        ddb.getItem(params, function(err, data) {
+            if (err)  {
+                console.log("Error", err);
+            } else {
+                console.log(JSON.stringify(data));
+                if (data.Item.label.S == "title") {
+                    return res.json(data);
+                }
+            }
+        });
+    } catch (err) {
+        console.log(err);
+    }
+};
+
