@@ -5,12 +5,20 @@
 </template>
 
 <script>
+import { ItemProvider } from '../providers';
 export default {
     data() {
+        
         return {
             message: 'default title'
         } 
     },
+    async mounted() {
+        let itemProvider = new ItemProvider();
+        let titleObj = await itemProvider.getTitleItem();
+        console.log(JSON.stringify(titleObj)); // eslint-disable-line
+        this.message = titleObj.Item.content.S;
+    }
 }
 </script>
 
