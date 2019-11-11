@@ -13,7 +13,7 @@ I'll try my best to keep most of them from being sappy.
 
 ### Sweet
 
-Sweet are her hands,
+Sweet are her hands
 
 For her fingertips curl into threads and cords of silk
 
