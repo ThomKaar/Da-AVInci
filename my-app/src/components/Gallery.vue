@@ -1,23 +1,24 @@
  <template>
      <v-carousel>
       <v-carousel-item
-        v-for="(image, i) in images"
+        v-for="(image) in images"
         :key="image.src"
       >
-        <v-img
-        :src="image.src">
-        </v-img>
-        <v-row
-        class="fill-height"
-        align="center"
-        justify="center"
+        <v-row class="title-row"
+        align="left"
+        justify="left"
         >
-            <div class="display-3">Slide {{ i + 1 }}</div>
+            <p class="title-display">{{ image.title.toLowerCase() }}</p>
         </v-row>
+
+        <img
+        :src="image.src"
+        class="displayImage"/>
       </v-carousel-item>
     </v-carousel>
 </template>
 <script>
+import { ImageProvider } from '../providers';
 export default {
     data () {
         return {
@@ -29,13 +30,24 @@ export default {
             'orange',
         ],
         images: [
-            { src: 'https://www.highreshdwallpapers.com/wp-content/uploads/2011/09/Large-Format-HD-Wallpaper.jpg' },
-            { src: 'https://tse1.mm.bing.net/th?id=OIP.-3bp4fl8rLnO8_NqwrgyQQHaED&pid=Api&P=0&w=357&h=196' },
-            { src: 'https://www.highreshdwallpapers.com/wp-content/uploads/2011/09/Large-Format-HD-Wallpaper.jpg' },
-            { src: 'https://tse1.mm.bing.net/th?id=OIP.-3bp4fl8rLnO8_NqwrgyQQHaED&pid=Api&P=0&w=357&h=196' },
-        ]
+        ],
         }
     },
+    async mounted() {
+        this.$root.$on('updateGallery', async(imageIds) => {
+            let imageProvider = new ImageProvider();
+            let backendImages = await imageProvider.getImagesByCollection(imageIds.NS);
+            let temp_images = [];
+            for (let image of backendImages) {
+                temp_images.push({
+                    src: image.url.S,
+                    title: image.title.S,
+                });
+            }
+            this.images = temp_images;
+            return;
+        });
+    }
 }
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -54,6 +66,24 @@ img {
     width: 100%;
     float: left;
 }
+.displayImage {
+    max-height: 85.5%;
+    max-width: 100%;
+}
+.title-display {
+    font-size: 16px;
+    color: #74b0f8;
+    margin-bottom: 0%;
+}
+
+.title-display:hover{
+    color: #74b0f8;
+}
+.title-row {
+    margin-left: 0%;
+}
+
+
 </style>
 
  

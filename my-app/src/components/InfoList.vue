@@ -14,8 +14,6 @@
 <script>
 import ListItem from './ListItem.vue';
 import { CategoryProvider } from '../providers';
-
-
 export default {
     components: {
         ListItem,
@@ -28,6 +26,7 @@ export default {
     async mounted() {
       var provider = new CategoryProvider();
       this.ListItems = await provider.getCategoryItems();
+      console.log(JSON.stringify(this.ListItems)); // eslint-disable-line 
     },
 }
 </script>

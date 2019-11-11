@@ -10,7 +10,7 @@
                 <h4 v-if="item.label" class="label"> {{ item.label.S.toLowerCase() }}</h4>
                 <h4 v-if="item.content && item.content.S != 'images' && item.content.S != 'internal'" class="content"> {{ item.content.S.toLowerCase() }} </h4>
             </a>
-            <a v-if="!item.externalUrl" class="link">
+            <a v-if="!item.externalUrl" class="link" v-on:click="imageSelect(item.imageIds)">
                 <h4 v-if="item.label" class="label"> {{ item.label.S.toLowerCase() }}</h4>
                 <h4 v-if="item.content && item.content.S != 'images' && item.content.S != 'internal'" class="content"> {{ item.content.S.toLowerCase() }} </h4>
             </a>
@@ -26,6 +26,15 @@ export default {
         'heading',
     ],
     data() {
+    },
+    mounted() {
+    },
+    methods: {
+        imageSelect(imageIds) {
+            if (imageIds && imageIds.NS && imageIds.NS.length) {
+                this.$root.$emit('updateGallery', imageIds);
+            }
+        }
     }
 }
 </script>

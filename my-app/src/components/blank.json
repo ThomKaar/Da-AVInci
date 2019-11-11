@@ -1,0 +1,203 @@
+[
+    {
+        "category": "projects",
+        "items":
+        [
+            {
+                "content":
+                {
+                    "S": "images"
+                },
+                "id":
+                {
+                    "N": "7"
+                },
+                "label":
+                {
+                    "S": "art challenge"
+                }
+            },
+            {
+                "content":
+                {
+                    "S": "images"
+                },
+                "imageIds":
+                {
+                    "NS":
+                    [
+                        "3",
+                        "2",
+                        "1"
+                    ]
+                },
+                "id":
+                {
+                    "N": "6"
+                },
+                "label":
+                {
+                    "S": "still life"
+                }
+            },
+            {
+                "content":
+                {
+                    "S": "images"
+                },
+                "id":
+                {
+                    "N": "5"
+                },
+                "label":
+                {
+                    "S": "Chaz's Cave"
+                }
+            },
+            {
+                "content":
+                {
+                    "S": "images"
+                },
+                "id":
+                {
+                    "N": "4"
+                },
+                "label":
+                {
+                    "S": "children"
+                }
+            }
+        ]
+    },
+    {
+        "category": "about",
+        "items":
+        [
+            {
+                "id":
+                {
+                    "N": "8"
+                },
+                "externalUrl":
+                {
+                    "S": "https://www.costarastrology.com/natal-chart/1579211"
+                },
+                "label":
+                {
+                    "S": "zodiac sign"
+                }
+            },
+            {
+                "content":
+                {
+                    "S": "internal"
+                },
+                "id":
+                {
+                    "N": "10"
+                },
+                "label":
+                {
+                    "S": "resume"
+                }
+            },
+            {
+                "content":
+                {
+                    "S": "internal"
+                },
+                "imageIds":
+                {
+                    "NS":
+                    [
+                        "2",
+                        "1"
+                    ]
+                },
+                "id":
+                {
+                    "N": "9"
+                },
+                "label":
+                {
+                    "S": "info"
+                }
+            }
+        ]
+    },
+    {
+        "category": "contact",
+        "items":
+        [
+            {
+                "content":
+                {
+                    "S": "@chicken.maknuggets"
+                },
+                "id":
+                {
+                    "N": "0"
+                },
+                "externalUrl":
+                {
+                    "S": "https://www.instagram.com/chicken.maknuggets/"
+                },
+                "label":
+                {
+                    "S": "instagram"
+                }
+            },
+            {
+                "content":
+                {
+                    "S": "kenakingkong"
+                },
+                "id":
+                {
+                    "N": "3"
+                },
+                "externalUrl":
+                {
+                    "S": "https://github.com/kenakingkong"
+                },
+                "label":
+                {
+                    "S": "Github"
+                }
+            },
+            {
+                "content":
+                {
+                    "S": "@MakenaKong"
+                },
+                "id":
+                {
+                    "N": "2"
+                },
+                "externalUrl":
+                {
+                    "S": "https://twitter.com/chrissyteigen"
+                },
+                "label":
+                {
+                    "S": "twitter"
+                }
+            },
+            {
+                "id":
+                {
+                    "N": "1"
+                },
+                "content":
+                {
+                    "S": "scrub@gmail.com"
+                },
+                "label":
+                {
+                    "S": "email"
+                }
+            }
+        ]
+    }
+]

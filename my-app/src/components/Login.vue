@@ -3,7 +3,6 @@
     <div id="form"> 
       <LoginForm></LoginForm>
     </div>
-    
   </div>
 </template>
 

@@ -13,7 +13,7 @@
               required
               ></v-text-field>
       </v-form>
-      <v-btn id="loginBtn">
+      <v-btn id="loginBtn" v-on:click="login">
           Login
       </v-btn>
   </div>
@@ -21,6 +21,11 @@
 
 <script>
 export default {
+  methods: {
+    login() {
+      this.$router.push('/editSite');
+    }
+  }
 }
 </script>
 
