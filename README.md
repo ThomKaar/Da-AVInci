@@ -19,5 +19,7 @@ Sweet
 
 Sweet are her hands,
 For her fingertips curl into threads and ropes of silk
+
 For her knuckles have been grazed with technicolor spots
+
 For her palms in the cool of morning lay open reaching for mine
