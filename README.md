@@ -18,6 +18,7 @@ Tonight I revised it again, but about your hands. Here it is
 Sweet
 
 Sweet are her hands,
+
 For her fingertips curl into threads and ropes of silk
 
 For her knuckles have been grazed with technicolor spots
