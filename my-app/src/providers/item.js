@@ -14,14 +14,27 @@ export class ItemProvider {
             return response.data;
         });
     }
+
+    getItemsByContent(content) {
+        return axios.get('/api/item/art/' + content).then((response) => {
+            return response.data;
+        });
+    }
+
+    getItemsByContentAndLabel(content, label) {
+        return axios.get('/api/item/art/' + content + '/' + label).then((response) => {
+            return response.data;
+        });
+    }
+
 	updateItem(id, item){
-		return axios.put('/api/art/' + id, item).then((response) => {
+		return axios.put('/api/item/' + id, item).then((response) => {
 			return response;
 		});
 	}
 
-	createGeneral(item) {
-		return axios.post('/api/art/', item).then((response) => {			
+	createItem(item) {
+		return axios.post('/api/item/create', item).then((response) => {			
 			return response.data;
 		});
 		

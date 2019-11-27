@@ -2,17 +2,16 @@
      <v-carousel>
       <v-carousel-item
         v-for="(image) in images"
-        :key="image.src"
+        :key="image.url.S"
       >
         <v-row class="title-row"
         align="left"
         justify="left"
         >
-            <p class="title-display">{{ image.title.toLowerCase() }}</p>
+            <p class="title-display">{{ image.title.S.toLowerCase() }}</p>
         </v-row>
-
         <img
-        :src="image.src"
+        :src="image.url.S"
         class="displayImage"/>
       </v-carousel-item>
     </v-carousel>
@@ -22,29 +21,24 @@ import { ImageProvider } from '../providers';
 export default {
     data () {
         return {
-        colors: [
-            'primary',
-            'secondary',
-            'yellow darken-2',
-            'red',
-            'orange',
-        ],
-        images: [
-        ],
-        }
+            colors: [
+                'primary',
+                'secondary',
+                'yellow darken-2',
+                'red',
+                'orange',
+            ],
+            images: [],
+        };
     },
     async mounted() {
+        let imageProvider = new ImageProvider();
+        let defaultImages = await imageProvider.getDefaultImages();
+        this.$data.images = defaultImages;
         this.$root.$on('updateGallery', async(imageIds) => {
             let imageProvider = new ImageProvider();
             let backendImages = await imageProvider.getImagesByCollection(imageIds.NS);
-            let temp_images = [];
-            for (let image of backendImages) {
-                temp_images.push({
-                    src: image.url.S,
-                    title: image.title.S,
-                });
-            }
-            this.images = temp_images;
+            this.images = backendImages;
             return;
         });
     }

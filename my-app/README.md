@@ -10,7 +10,6 @@
 - delete list items under headings
 - create new items under headings
 
-- upload images
 - option to resize image (also preview) or to just display at the size of upload
 - gallery displays image at the size it was uploaded
 - image resizing on upload to fit to the gallery
@@ -18,9 +17,6 @@
 - website preview
 
 ### Website UX
-- icons next to the contact links instead of the name of the platform
-- Icon in tab bar (idk what to put there)
-
 
 ### Final Steps
 - mobile compatability
@@ -51,3 +47,7 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+# USE THIS ICON 
+- import { mdiPirate } from '@mdi/js';s

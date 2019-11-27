@@ -26,7 +26,6 @@ export default {
     async mounted() {
       var provider = new CategoryProvider();
       this.ListItems = await provider.getCategoryItems();
-      console.log(JSON.stringify(this.ListItems)); // eslint-disable-line 
     },
 }
 </script>

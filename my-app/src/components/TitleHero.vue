@@ -10,7 +10,7 @@ export default {
     data() {
         
         return {
-            message: 'default title',
+            message: '',
         } 
     },
     async mounted() {
