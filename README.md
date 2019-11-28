@@ -17,7 +17,8 @@ I'll try my best to keep most of them from being sappy, aside from 'Sweet'.
 
 Clone the repo
 ```bash
-git clone https://github.com/ThomKaar/Da-AVInci.git
+git clone https://github.com/ThomKaar/Da-AVInci.git;
+cd Da-AVInci;
 ```
 ----
 ### Front End Setup
