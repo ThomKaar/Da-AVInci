@@ -9,7 +9,7 @@ Of course you're totally free to edit the codebase however you wish.
 I'm kind of kicking myself for showing you the website in an unfinished state this past Monday.
 I feel like the gift has lost some of the magic and shock to it.
 So I thought adding in a few poems might be something you wouldn't expect.
-I'll try my best to keep most of them from being sappy, aside from the last one.
+I'll try my best to keep most of them from being sappy, aside 'Sweet'.
 
 ### the treated tree
 
