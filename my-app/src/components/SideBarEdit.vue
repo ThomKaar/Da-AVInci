@@ -245,4 +245,25 @@ export default {
     margin-bottom: 5%;
     margin-left: 3%;
 }
+
+
+/* 
+the treated tree
+
+shallow rooted isolate trunk
+sweats glistening beads from its sprinkler
+green leaves in the valley
+of burnt browns and drought yellows
+
+sway in the wind of dust
+cresting the natural hills
+to buffet the synthetically
+organic designer bark
+
+nestled in a bed of mulch
+a bed of stinky shit
+dirty work to raise something successful 
+in a valley that should be dead 
+
+*/
 </style>
