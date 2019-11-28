@@ -40,8 +40,8 @@ export class ItemProvider {
 		
     }
     
-    removeItem(item) {
-        return axios.delete('/api/art/', item).then((response) => {
+    deleteItem(id) {
+        return axios.delete('/api/item/' + id).then((response) => {
             return response.data
         })
     }

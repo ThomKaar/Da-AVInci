@@ -124,6 +124,7 @@ exports.getItemByContentAndLabel = async(req, res) => {
 
 exports.updateItemById = async(req, res) => {
     try {
+        console.log(req.body);
         var params = {
             Item: req.body, 
             TableName: "Item",
@@ -132,7 +133,6 @@ exports.updateItemById = async(req, res) => {
             if (err) {
                 console.log(err);
             } else {
-                console.log("Success!");
                 res.json(data.Items);
             }
         });
@@ -188,6 +188,23 @@ exports.createItem = async(req, res) => {
 
         });
         
+    } catch (e) {
+        console.log(e);
+    }
+};
+
+exports.deleteItem = async(req, res) => {
+    try {
+        var params = {
+            Key: {
+                id: { N: req.params.id},
+            },
+            TableName: "Item",
+        };
+        ddb.deleteItem(params, function(err, data) {
+            if(err) console.log(err);
+            else res.json(data);
+        });
     } catch (e) {
         console.log(e);
     }

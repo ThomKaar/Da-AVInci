@@ -3,8 +3,8 @@
     <h4 class="heading"> {{ this.heading.toUpperCase() }} </h4>
     <ul>
         <li
-        v-for="item of list"
-        v-bind:key="item.id"
+        v-for="(item, i) of list"
+        v-bind:key="i"
         >
             <a v-if="item.externalUrl" v-bind:href="item.externalUrl.S" class="link">
                 <v-icon v-if="item.icon" class="icon"> {{ item.icon.S }} </v-icon>
@@ -27,12 +27,13 @@ export default {
         'heading',
     ],
     data() {
+        return {};
     },
     mounted() {
     },
     methods: {
         imageSelect(imageIds) {
-            if (imageIds && imageIds.NS && imageIds.NS.length) {
+            if (imageIds && imageIds.L && imageIds.L.length) {
                 this.$root.$emit('updateGallery', imageIds);
             }
         }

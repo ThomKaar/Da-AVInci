@@ -86,7 +86,6 @@ export default {
             this.$data.info.push(newHeading);
         },
         updateContent: function() {
-            console.log(this.$data.info); // eslint-disable-line
             let categories = [];
             for (let heading of this.$data.info){
                 categories.push({
@@ -94,7 +93,6 @@ export default {
                         S: heading.category}
                     });
             }
-            console.log(categories); // eslint-disable-line
         },
         removeHeading: function(i) {
             this.info.splice(i, 1);

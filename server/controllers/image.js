@@ -6,11 +6,11 @@ var s3 = new AWS.S3({apiVersion: '2006-03-01'});
 // Get Item by id
 exports.getImagesById = async(req,res) => {
     try{
-        var arr = req.params.ids;
+        var arr = req.params.ids.split(",");
         var num_ids = [];
         for (id of arr) {
-            if (id >= '0' && id <= '9') {
-                num_ids.push({ id: { N: id } });
+            if (id) {
+                num_ids.push({ id: { N: id  + ""} });
             }
         }
         var params = {
@@ -35,7 +35,6 @@ exports.getImagesById = async(req,res) => {
 exports.uploadImage = async(req, res) => {
     try {
         let key = "stillLife/" + req.body.title + ".jpg";
-        console.log(req.body);
         var params = {
             Body: req.body.bs,
             Bucket: 'da-vinci-image-bucket',

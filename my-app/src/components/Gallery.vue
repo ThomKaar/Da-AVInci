@@ -1,18 +1,23 @@
  <template>
      <v-carousel>
       <v-carousel-item
-        v-for="(image) in images"
+        v-for="(image) of images"
         :key="image.url.S"
       >
         <v-row class="title-row"
-        align="left"
-        justify="left"
         >
             <p class="title-display">{{ image.title.S.toLowerCase() }}</p>
         </v-row>
-        <img
+        <v-img
+              contain
+              max-height="475px"
+              aspect-ratio=1
+              :src=image.url.S
+              >
+        </v-img>
+        <!-- <img
         :src="image.url.S"
-        class="displayImage"/>
+        class="displayImage"/> -->
       </v-carousel-item>
     </v-carousel>
 </template>
@@ -35,13 +40,18 @@ export default {
         let imageProvider = new ImageProvider();
         let defaultImages = await imageProvider.getDefaultImages();
         this.$data.images = defaultImages;
-        this.$root.$on('updateGallery', async(imageIds) => {
+        this.$root.$on('updateGallery', async (imageIds) => {
             let imageProvider = new ImageProvider();
-            let backendImages = await imageProvider.getImagesByCollection(imageIds.NS);
-            this.images = backendImages;
-            return;
+            let numids = [];
+            for (let id of imageIds.L) {
+                numids.push(id.N);
+            }
+            let backendImages = await imageProvider.getImagesByCollection(numids);
+            this.$data.images = backendImages;
+            console.log("images") // eslint-disable-line
+            console.log(this.$data.images); // eslint-disable-line
         });
-    }
+    },
 }
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->

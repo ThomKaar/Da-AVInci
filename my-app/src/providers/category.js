@@ -21,8 +21,8 @@ export class CategoryProvider {
 		});
 	}
 
-	updateCateory(id, cateory){
-		return axios.put('/api/art/' + id, cateory).then((response) => {
+	updateCateory(category){
+		return axios.put('/api/category', category).then((response) => {
 			return response;
 		});
 	}
@@ -34,9 +34,9 @@ export class CategoryProvider {
 		
     }
     
-    removeCateory(cateory) {
-        return axios.delete('/api/art/', cateory).then((response) => {
-            return response.data
+    deleteCategory(category) {
+        return axios.delete('/api/category/' + category).then((response) => {
+            return response.data;
         })
     }
 }

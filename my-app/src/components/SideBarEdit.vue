@@ -15,12 +15,16 @@
                         {{ "Category " + i}}
                     </template>
                 </v-text-field>
+                <v-btn height="55" class="deleteButton" v-on:click="deleteHeader(i)">
+                    <v-icon small>mdi-delete</v-icon>
+                </v-btn>
             </v-card-title>
             <v-card-actions class="ma-2">
                     <v-flex class="pa-1">
                         <div
                             v-for="(item, j) of heading.items"
-                            v-bind:key=j>
+                            v-bind:key=j
+                            class="item">
 
                             <v-select v-model="item.type.S" :items="types" label="Item Type" v-on:change="onSelect(item.type.S, i, j)"></v-select>
                             
@@ -81,17 +85,32 @@
                                         </template>
                                 </v-text-field>
                             </div>
+                            <v-btn v-on:click="deleteItem(i,j)">
+                                DELETE ITEM
+                            </v-btn>
                         </div>
                     </v-flex>
             </v-card-actions>
-            <v-btn class="addButton" color="#29B6" v-on:click="addItem(i)">
-                add item
-            </v-btn>
+            <div class="cardFooter">
+                <v-btn class="editButton" color="#29B6" v-on:click="addItem(i)">
+                    add item
+                </v-btn>
+                <v-btn class="editButton" color="#29B6" v-on:click="updateItems(i)">
+                    update items
+                </v-btn>
+            </div>
+            
         </v-card>
+        <div class="belowCard">
+            <v-btn class="editButton" color="#29B6" v-on:click="addHeader()">
+            Add Header
+            </v-btn>
+        </div>
     </div>
 </template>
 <script>
-import { CategoryProvider } from '../providers';
+import { ItemProvider, CategoryProvider } from '../providers';
+
 export default {
     components: {
     },
@@ -108,6 +127,7 @@ export default {
     async mounted() {
         let provider = new CategoryProvider();
         this.$data.info = await provider.getCategoryItems();
+        console.log(this.$data.info); // eslint-disable-line
         return;
     },
     methods: {
@@ -122,29 +142,107 @@ export default {
             this.$data.info[i].items.push(emptyItem);
         },
         onSelect: function(type, i, j) {
+            let newItem = { type: {S: type}, id: {N: this.$data.info[i].items[j].id.N}};
             if (type === 'icon') {
-                this.$data.info[i].items[j].type.S = 'icon';
-                this.$data.info[i].items[j].content = {S: ""};
-                this.$data.info[i].items[j].externalUrl = {S: ""};
-                this.$data.info[i].items[j].icon = {S: ""};
+                newItem.content = {S: ""};
+                newItem.externalUrl = {S: ""};
+                newItem.icon = {S: ""};
             } else  if (type === 'images') {
                 this.$data.info[i].items[j].type.S = 'images';
-                this.$data.info[i].items[j].label = {S: ""};
-                this.$data.info[i].items[j].imageIds = {L: []};
+                newItem.label = {S: ""};
+                newItem.imageIds = {L: [{N : "1"}]};
+                newItem.content = {S: "images"};
             } else if (type === 'simpleLink') {
-                this.$data.info[i].items[j].type.S = 'simpleLink';
-                this.$data.info[i].items[j].label = {S: ""};
-                this.$data.info[i].items[j].externalUrl = {S: ""};
+                newItem.label = {S: ""};
+                newItem.externalUrl = {S: ""};
+            }
+            this.$data.info[i].items.splice(j,1, newItem);
+        },
+        updateItems: function(i) {
+            let category = {
+                    name: this.$data.info[i].category,
+                    items: [],
+            };
+            let itemProvider = new ItemProvider();
+            for (let item of this.$data.info[i].items) {
+                if (item.id.N !== 'UNKOWN') {
+                    category.items.push(item.id.N);
+                    itemProvider.updateItem(item.id.N, item);
+                } else {
+                    let id = this.newId();
+                    item.id = {N: "" + id};
+                    category.items.push("" + id);
+                    itemProvider.updateItem(id, item);
+                }
+            }
+            let categoryProvider = new CategoryProvider();
+            categoryProvider.updateCateory(category);
+        },
+        newId: function() {
+            let max = -1;
+            for (let heading of this.$data.info) {
+                for(let item of heading.items) {
+                    if (parseInt(item.id.N) > max) {
+                        max = parseInt(item.id.N);
+                    }
+                }
+            }
+            return max + 1;
+        },
+        deleteItem: function(i, j) {
+            this.$data.info[i].items.splice(j, 1);
+        },
+        addHeader: function() {
+            this.$data.info.push({
+                category: '',
+                items: [
+                    {
+                        type: {S: "icon"},
+                        id: {N: "UNKOWN"},
+                        content: {S: ""},
+                        externalUrl: {S: ""},
+                        icon: {S: ""}, 
+                    }
+                ],
+            });
+        },
+        deleteHeader: function(i) {
+            let category = this.$data.info[i].category;
+            console.log(category); // eslint-disable-line
+            let items = this.$data.info[i].items;
+            let categoryProvider =  new CategoryProvider();
+            categoryProvider.deleteCategory(category);
+            let itemProvider = new ItemProvider();
+            for(let item of items) {
+                if( item.id.N !== "UNKNOWN") {
+                    itemProvider.deleteItem(item.id.N);
+                }
             }
         }
     }
 }
 </script>
 <style scoped>
-.addButton {
-    width: 20%;
-    margin-left: 40%;
-    margin-right: 40%;
+.editButton {
+    width: 50%;
+    
+}
+.cardFooter {
+    width: 40%;
+    margin-left: 30%;
+    margin-right: 30%;
     margin-bottom: 4%;
+}
+.item {
+    margin-bottom: 10%;
+}
+
+.belowCard {
+    text-align: center;
+}
+.deleteButton {
+    height: 200px;
+    margin-bottom: 5%;
+    margin-left: 3%;
 }
 </style>

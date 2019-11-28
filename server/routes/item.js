@@ -9,6 +9,7 @@ itemRouter.get('/art/:content', ItemController.getItemByContent);
 itemRouter.get('/art/:content/:label', ItemController.getItemByContentAndLabel);
 itemRouter.post('/create', ItemController.createItem);
 itemRouter.put('/:id', ItemController.updateItemById);
+itemRouter.delete('/:id', ItemController.deleteItem);
 
 
 module.exports = itemRouter;

@@ -68,18 +68,63 @@ exports.createCategory = async(req, res) => {
     }
 };
 
+exports.updateCategory = async(req, res) => {
+    try {
+        var params = {
+            Item: {
+                "name": {
+                    S: req.body.name
+                },
+                "items": {
+                    NS: req.body.items
+                },
+            },
+            ReturnConsumedCapacity: "TOTAL", 
+            TableName: "Category"
+        };
+        ddb.putItem(params, function(e, data) {
+            if (e) {
+                console.log("putItem for updateCateogry didn't work..." + e);
+            } else {
+                res.json(data);
+            }
+        });
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+exports.deleteCategory = async(req, res) => {
+    try {
+        console.log(req.params.name);
+        var params = {
+            Key: {
+                "name": { S: req.params.name },
+            },
+            TableName: "Category",
+        };
+        
+        ddb.deleteItem(params, function(err, data) {
+            if (err) console.log(err);
+            else res.json(data);
+        });
+    } catch (e) {
+
+    }
+};
+
 function organizeData(cData, iData) {
-    // Sort the iData in ascending order by id
-    iData.sort(function(a,b) {
-        return a.id.N - b.id.N;
-    });
     categories = []
     // Loop through categories connecting item data and category name
     for (let i = 0; i < cData.Count; i += 1) {
         var categoryName = cData.Items[i].name.S;
         var  items = [];
         for (let j = 0; j < cData.Items[i].items.NS.length; j += 1) {
-            items.push(iData[cData.Items[i].items.NS[j]]);
+            for (let  k = 0 ; k < iData.length; k += 1) {
+                if (iData[k].id.N == cData.Items[i].items.NS[j]) {
+                    items.push(iData[k]);
+                }
+            }
         }
         categories.push({
             category: categoryName,

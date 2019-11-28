@@ -203,8 +203,6 @@ export default {
             for (let i = 0; i < this.$data.displayImages.length; i += 1) {
               for(let j = 0; j < this.$data.displayImages[i].collections.length; j += 1) {
                 if (this.$data.activeCollection == this.$data.displayImages[i].collections[j]) {
-                  console.log("Found a selected image"); // eslint-disable-line
-                  console.log(this.$data.displayImages[i].id); // eslint-disable-line
                   imageIds.push(this.$data.displayImages[i].id);
                 }
               }

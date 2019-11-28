@@ -1,11 +1,11 @@
 <template>
     <div class="title">
-        <h1> {{ message.toUpperCase() }}</h1> 
+        <h1> Da Avinci</h1> 
     </div>
 </template>
 
 <script>
-import { ItemProvider } from '../providers';
+// import { ItemProvider } from '../providers';
 export default {
     data() {
         
@@ -14,9 +14,9 @@ export default {
         } 
     },
     async mounted() {
-        let itemProvider = new ItemProvider();
-        let titleObj = await itemProvider.getTitleItem();
-        this.message = titleObj.Item.content.S;
+        // let itemProvider = new ItemProvider();
+        // let titleObj = await itemProvider.getTitleItem();
+        // this.message = titleObj.Item.content.S;
     }
 }
 </script>
