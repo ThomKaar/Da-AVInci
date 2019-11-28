@@ -39,3 +39,10 @@ npm run start
 ```
 
 The server is at localhost:3000
+
+# Important urls
+
+localhost:8080 - main site that others will see
+
+localhost:8080/editSite - the way you edit the main site, I can show you how it works, hopefully it won't be too confusing but it might be.
+You can edit the side bar contents, upload images, or choose which items on the left display images in the gallery.

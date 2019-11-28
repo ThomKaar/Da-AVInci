@@ -208,8 +208,8 @@ export default {
         },
         deleteHeader: function(i) {
             let category = this.$data.info[i].category;
-            console.log(category); // eslint-disable-line
             let items = this.$data.info[i].items;
+            this.$data.info.splice(i, 1);
             let categoryProvider =  new CategoryProvider();
             categoryProvider.deleteCategory(category);
             let itemProvider = new ItemProvider();
