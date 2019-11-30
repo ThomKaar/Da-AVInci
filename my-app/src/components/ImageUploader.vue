@@ -13,7 +13,6 @@
           ></v-text-field>
         
       </v-list-item-content>
-
       
     </v-list-item>
     <v-list-item>
@@ -54,6 +53,7 @@ export default {
           headers: {},
           filesUploaded: [],
           title: "",
+          fileExtension: "",
         };
     },
     methods: {
@@ -62,20 +62,24 @@ export default {
       },
       onFileUpdate: function(file) {
         this.$data.filesUploaded = file.target.files[0];
+        this.$data.title = file.target.files[0].name.split('.')[0];
+        this.$data.fileExtension = file.target.files[0].name.split('.')[1];
+        
       },
       uploadFiles: function() {
         // const imageProvider = new ImageProvider();
         let file = this.$data.filesUploaded;
         let title = this.$data.title;
+        let extension = this.$data.fileExtension;
         AWS.config.update({
           region: "us-east-1",
-          accessKeyId: "AKIAUROVSY2CUBVQDMC5", 
+          accessKeyId: "AKIAUROVSY2CUBVQDMC5",
           secretAccessKey: "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",
         });
         var upload = new AWS.S3.ManagedUpload({
           params: {
             Bucket: 'da-vinci-image-bucket',
-            Key: "stillLife/" + title + ".jpg",
+            Key: "stillLife/" + title + "." + extension,
             Body: file,
             ACL: "public-read"
           },

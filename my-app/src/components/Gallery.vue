@@ -1,25 +1,26 @@
  <template>
-     <v-carousel>
-      <v-carousel-item
-        v-for="(image) of images"
-        :key="image.url.S"
-      >
-        <v-row class="title-row"
-        >
-            <p class="title-display">{{ image.title.S.toLowerCase() }}</p>
-        </v-row>
-        <v-img
-              contain
-              max-height="475px"
-              aspect-ratio=1
-              :src=image.url.S
-              >
-        </v-img>
-        <!-- <img
-        :src="image.url.S"
-        class="displayImage"/> -->
-      </v-carousel-item>
-    </v-carousel>
+    <div>
+        <v-carousel>
+            <v-carousel-item
+                v-for="(image) of images"
+                :key="image.url.S"
+            >
+                
+                <v-row class="title-row"
+                >
+                    <p class="title-display">{{ image.title.S.toLowerCase() }}</p>
+                </v-row>
+                <v-img
+                    contain
+                    max-height="475px"
+                    aspect-ratio=1
+                    :src=image.url.S
+                    >
+                </v-img>
+            </v-carousel-item>
+        </v-carousel>
+        
+    </div>
 </template>
 <script>
 import { ImageProvider } from '../providers';
@@ -78,6 +79,8 @@ img {
     font-size: 16px;
     color: #74b0f8;
     margin-bottom: 0%;
+    margin: auto;
+    text-align: center;
 }
 
 .title-display:hover{
@@ -85,6 +88,7 @@ img {
 }
 .title-row {
     margin-left: 0%;
+    text-align: center;
 }
 
 
