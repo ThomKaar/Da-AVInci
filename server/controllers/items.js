@@ -141,6 +141,8 @@ exports.updateItemById = async(req, res) => {
     }
 };
 
+
+// What happens when we have the next id created is not an image...
 exports.createItem = async(req, res) => {
     try {
         var params = {
@@ -156,7 +158,7 @@ exports.createItem = async(req, res) => {
             } else {
                 let max = 0;
                 for (item of idData.Items) {
-                    if (item.id.N > max) {
+                    if (parseInt(item.id.N) > max) {
                         max = item.id.N;
                     }
                 }
@@ -209,3 +211,28 @@ exports.deleteItem = async(req, res) => {
         console.log(e);
     }
 };
+
+// Scan the Item table and find the max id number and return one higher
+exports.getNewItemId = async(req, res) => {
+    try {
+        var params = {
+            TableName: "Item",
+            AttributesToGet: [ "id" ],
+        };
+        ddb.scan(params, function(err, items) { 
+            if(err) console.log(err);
+            else {
+                let max = -1;
+                for (item of items.Items) { 
+                    if (parseInt(item.id.N) > max) {
+                        max  = parseInt(item.id.N);
+                    }
+                }
+                max += 1;
+                res.json(max);
+            }
+        });
+    } catch (e) {
+        console.log(e);
+    }
+}

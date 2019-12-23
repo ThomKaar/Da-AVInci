@@ -42,7 +42,13 @@ export class ItemProvider {
     
     deleteItem(id) {
         return axios.delete('/api/item/' + id).then((response) => {
-            return response.data
+            return response.data;
+        })
+    }
+    
+    findNewId() {
+        return axios.get('/api/item/newId/newId').then((response) => {
+            return response.data;
         })
     }
 }

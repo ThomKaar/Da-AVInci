@@ -46,11 +46,17 @@
                                         </template>
                                 </v-text-field>
                                 <v-text-field
-                                    class="editField"
+                                    class="mb-2 editField"
                                     v-model="item.icon.S"
+                                    id="iconField"
                                     outlined>
                                         <template v-slot:label>
                                             {{ "Icon"}}
+                                        </template>
+                                        <template v-slot:append-outer>
+                                             <a class="noDecorationLink" href="https://materialdesignicons.com/">
+                                             <v-icon >mdi-help-circle-outline</v-icon>
+                                             </a>
                                         </template>
                                 </v-text-field>
                             </div>
@@ -246,6 +252,12 @@ export default {
     margin-left: 3%;
 }
 
+#iconField {
+    margin-bottom: 0%;
+}
+.noDecorationLink{
+    text-decoration: none;
+}
 
 /* 
 the treated tree

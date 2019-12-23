@@ -6,6 +6,7 @@ var itemRouter = express.Router();
 itemRouter.get('/:id', ItemController.getItemByIdReq);
 itemRouter.get('/top/title', ItemController.getItemTitle);
 itemRouter.get('/art/:content', ItemController.getItemByContent);
+itemRouter.get('/newId/newId', ItemController.getNewItemId);
 itemRouter.get('/art/:content/:label', ItemController.getItemByContentAndLabel);
 itemRouter.post('/create', ItemController.createItem);
 itemRouter.put('/:id', ItemController.updateItemById);
