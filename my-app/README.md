@@ -32,10 +32,16 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 - Login credentials with aws cognito
 - website preview
 
-### TODO Before I share it
-- import the font
-- Hide Poems
-- Screenshot and put in image file (open and festering)
+### TODO 
++ Plus button remove yeet 
+- option for no title -- she says she doesn't want it, but i don't believe her
++ link to icons 
+- Uploading the same image
+- image upload to a lambda function via api gateway
+- connect to route 53
+- connect to cloud front
+- connect domain to aws cognito
+- token in the url for editSite 
 
 ### Final Steps
 - mobile compatability

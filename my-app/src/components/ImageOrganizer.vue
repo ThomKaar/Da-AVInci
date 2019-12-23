@@ -17,9 +17,45 @@
           {{ tag }}
           <v-icon class="removeTag" v-on:click.prevent="removeTag(i)" x-small>mdi-close-circle-outline</v-icon>
         </v-chip>
-        <v-btn class="addTag" x-small v-on:click.prevent="addTag()">
-            <v-icon small>mdi-plus-thick</v-icon>
-        </v-btn>
+        <!-- <v-dialog
+         v-model="dialog">
+          <template v-slot:activator="{ on }">
+            <v-btn class="addTag" x-small v-on="on">
+              <v-icon small>mdi-plus-thick</v-icon>
+            </v-btn>
+          </template>
+           <v-card>
+            <v-card-title
+              class="headline grey lighten-2"
+              primary-title
+            >
+              New Image Category
+            </v-card-title>
+
+            <v-card-text>
+              <v-text-field
+                label="Regular"
+                placeholder="Placeholder"
+                v-model="newCategory"
+                :rules="[rules.required]"
+              ></v-text-field>
+            </v-card-text>
+
+            <v-divider></v-divider>
+
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn
+                color="primary"
+                text
+                @click="addTag(newCategory)"
+              >
+              ADD 
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog> -->
+        
       </v-chip-group>
         
     </v-list-item-content>
@@ -146,11 +182,43 @@ export default {
             tags: ['default'],
             displayImages: [],
             activeCollection: 'default',
+            rules: {
+              required: value => !!value || 'Required',
+            },
+            newCategory: '',
+            dialog: false,
         };
     },
     methods: {
-        addTag: function() {
-            this.$data.tags.push('yeet');
+        addTag: function(newCategory) {
+            if (newCategory !== '') {
+              // Add it to the UI
+              this.$data.tags.push(newCategory);
+              this.$data.newCategory = '';
+              this.$data.dialog = false;
+              // Create a new item with the type.S = 'images' and label.S = given string
+              let itemProvider = new ItemProvider(); // eslint-disable-line
+              itemProvider.findNewId().then((newId) => {
+                let item = {
+                  id: {
+                    N: "" + newId,
+                  },
+                  label: {
+                    S: newCategory,
+                  },
+                  type: {
+                    S: "images",
+                  },
+                  content: {
+                    S: "images",
+                  },
+                };
+                itemProvider.updateItem(newId, item).then((response) => {
+                    console.log(response); // eslint-disable-line
+                });
+              });
+            }
+            
         },
         removeTag: function(i) {
             this.$data.tags.splice(i, 1);
