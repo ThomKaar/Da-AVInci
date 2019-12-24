@@ -26,7 +26,11 @@
     <v-list-item>
       <v-list-item-content>
         <v-card-actions>
-          <v-btn v-on:click="uploadFiles" class="button">Upload</v-btn>
+          <v-btn 
+          v-on:click="uploadFiles" 
+          class="button"
+          :loading="loading"
+          >Upload</v-btn>
         </v-card-actions>
       </v-list-item-content>
     </v-list-item>
@@ -54,6 +58,7 @@ export default {
           filesUploaded: [],
           title: "",
           fileExtension: "",
+          loading: false,
         };
     },
     methods: {
@@ -67,10 +72,23 @@ export default {
         
       },
       uploadFiles: function() {
+        this.$data.loading = true;
+        // emit event to reload the imageOrganizer once the image is uploaded
+        // set loading until the upload is done...
         // const imageProvider = new ImageProvider();
         let file = this.$data.filesUploaded;
         let title = this.$data.title;
         let extension = this.$data.fileExtension;
+        let contentType = '';
+        if (extension.includes('jpeg') || extension.includes('jpg')) {
+          contentType = 'image/jpeg';
+        } else if (extension.includes('png')) { 
+          contentType = 'image/png';
+        } else if (extension.includes('gif')) {
+          contentType = 'image/gif';
+        } else {
+          console.log('Unkown Content Type: please use jpg, jpeg, png, or gif'); // eslint-disable-line
+        }
         AWS.config.update({
           region: "us-east-1",
           accessKeyId: "AKIAUROVSY2CUBVQDMC5",
@@ -81,10 +99,12 @@ export default {
             Bucket: 'da-vinci-image-bucket',
             Key: "stillLife/" + title + "." + extension,
             Body: file,
-            ACL: "public-read"
+            ACL: "public-read",
+            ContentType: contentType,
           },
         });
         var promise = upload.promise();
+        this.$data.loading = false;
         promise.then(
           function(response) {
             let itemProvider = new ItemProvider();
@@ -96,7 +116,8 @@ export default {
           function(err) {
             return alert("There was an error uploading your photo: ", err.message); // eslint-disable-line
           }
-        );   
+        );
+        this.$emit('updateContent', {content: this.content, level: this.level});   
       },
       mounted: function() {
         
