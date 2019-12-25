@@ -39,7 +39,8 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 + Speed up image rendering
 - Uploading the same image -- unsure how to reproduce
 - queue all image loads when clicking on the category (little boxes under the carousel?)
-- image upload to a lambda function via api gateway
+- Ordering/Reordering images within the gallery
++ image upload to a lambda function via api gateway
 - connect to route 53
 - connect to cloud front
 - connect domain to aws cognito

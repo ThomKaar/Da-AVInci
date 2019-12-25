@@ -47,8 +47,9 @@ exports.uploadImage = async(req, res) => {
         var params = {
                 Bucket: 'da-vinci-image-bucket',
                 Key: "stillLife/" + title + "." + "jpg",
-                Body: req.body.file,
+                Body: Buffer.from(req.body.file, "binary"),
                 ACL: "public-read",
+                ContentType: req.body.contentType
         };
         s3.upload(params, function(err, data) {
             if (err) console.log(err);
