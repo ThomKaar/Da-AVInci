@@ -6,7 +6,6 @@ var imageRouter = express.Router();
 imageRouter.get('/collection/:ids', ImageController.getImagesById); 
 imageRouter.get('/default', ImageController.getDefaultImages);
 imageRouter.get('/all', ImageController.getAllImages);
-
 imageRouter.post('/upload', ImageController.uploadImage);
 
 module.exports = imageRouter;

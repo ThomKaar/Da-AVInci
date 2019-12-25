@@ -34,21 +34,30 @@ exports.getImagesById = async(req,res) => {
 
 exports.uploadImage = async(req, res) => {
     try {
-        let key = "stillLife/" + req.body.title + ".jpg";
+        console.log(req.body);
+        AWS.config.update({
+            region: "us-east-1",
+            accessKeyId: "AKIAUROVSY2CUBVQDMC5",
+            secretAccessKey: "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",
+          });
+
+        let title = req.body.title;
+
+        console.log("config upadted");
         var params = {
-            Body: req.body.bs,
-            Bucket: 'da-vinci-image-bucket',
-            Key: key,
+                Bucket: 'da-vinci-image-bucket',
+                Key: "stillLife/" + title + "." + "jpg",
+                Body: req.body.file,
+                ACL: "public-read",
         };
-        s3.putObject(params, function(error, data) {
-            if (error) {
-                console.log(error);
-            } else {
-                res.json("Success");
+        s3.upload(params, function(err, data) {
+            if (err) console.log(err);
+            else {
+                console.log("Within upload");
+                res.json(data);
             }
         });
-        
-        res.json();
+        // res.json();
     } catch (err) {
 
     }
