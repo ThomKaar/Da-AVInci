@@ -7,18 +7,18 @@
       <v-list-item three-line>
         <v-list-item-content>
           <v-list-item-title class="headline mb-1 title">Image Uploader</v-list-item-title>
-          <input
-              name="title"
-              v-model="title"
-              label="Title"
-            >
+          <v-text-field
+            class="titleField"
+            v-model="title"
+            label="Title"
+          ></v-text-field>
           
         </v-list-item-content>
       
       </v-list-item>
     <v-list-item>
       <v-list-item-content>
-        <input type="file" name="file" @change="onFileUpdate">
+        <input class="fileInput" type="file" name="file" @change="onFileUpdate">
       </v-list-item-content>
     </v-list-item>
     
@@ -130,6 +130,13 @@ export default {
 
 .form {
   text-align: center;
+}
+
+.fileInput {
   margin-left: 15%;
+}
+.titleField {
+  margin-left: 10%;
+  margin-right: 10%;
 }
 </style>

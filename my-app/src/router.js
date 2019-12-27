@@ -23,6 +23,10 @@ const router = new Router({
       name: 'editSite',
       component: () => import('./components/Edit.vue'),
     },
+    {
+      path: '*',
+      component: Home,
+    },
   ],
 });
 

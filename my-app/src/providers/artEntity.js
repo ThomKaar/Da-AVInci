@@ -1,35 +1,38 @@
 import axios from 'axios';
 
 export class ArtEntityProvider {
-    constructor() {}
+    constructor() {
+		axios.defaults.baseURL = 'http://3.93.231.178:5000';
+		axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+	}
     
 	getArtEntityById(id){
-		return axios.get('/api/art/' + id).then((response) => {
+		return axios.get('/art/' + id).then((response) => {
 			return response.data;
 		});
 	}
 
 	updateArtEntity(id, artEntity){
-		return axios.put('/api/art/' + id, artEntity).then((response) => {
+		return axios.put('/art/' + id, artEntity).then((response) => {
 			return response;
 		});
 	}
 
 	createGeneral(artEntity) {
-		return axios.post('/api/art/', artEntity).then((response) => {			
+		return axios.post('/art/', artEntity).then((response) => {			
 			return response.data;
 		});
 		
     }
     
     removeArtEntity(artEntity) {
-        return axios.delete('/api/art/', artEntity).then((response) => {
+        return axios.delete('/art/', artEntity).then((response) => {
             return response.data
         })
     }
 
     getArtEntityByCategory(category) {
-        return axios.get('/api/art/category/' + category).then((response) => {
+        return axios.get('/art/category/' + category).then((response) => {
             return response.data;
         });
     }
