@@ -1,6 +1,8 @@
  <template>
     <div>
-        <v-carousel>
+        <v-carousel
+            hide-delimiters
+            >
             <v-carousel-item
                 v-for="(image) of images"
                 :key="image.url.S"
@@ -19,10 +21,11 @@
                 </v-img>
             </v-carousel-item>
         </v-carousel>
-        <div> 
+        <div id="wrapper"> 
             <div 
             v-for="(image,i) of images"
             :key="i"
+            class="previewDiv"
             >
                 <v-img
                 contain
@@ -107,6 +110,12 @@ img {
     margin: 3px;
     border: solid;
     border-color: #74b0f8;
+}
+#wrapper {
+    text-align: center;
+}
+.previewDiv {
+    display:inline-block;
 }
 
 
