@@ -19,6 +19,18 @@
                 </v-img>
             </v-carousel-item>
         </v-carousel>
+        <div> 
+            <div 
+            v-for="(image,i) of images"
+            :key="i"
+            >
+                <v-img
+                contain
+                :src="image.url.S"
+                class="previewImage">
+                </v-img> 
+            </div>
+        </div>
         
     </div>
 </template>
@@ -49,8 +61,6 @@ export default {
             }
             let backendImages = await imageProvider.getImagesByCollection(numids);
             this.$data.images = backendImages;
-            console.log("images") // eslint-disable-line
-            console.log(this.$data.images); // eslint-disable-line
         });
     },
 }
@@ -89,6 +99,14 @@ img {
 .title-row {
     margin-left: 0%;
     text-align: center;
+}
+.previewImage {
+    float: left;
+    width: 50px;
+    height: 50px;
+    margin: 3px;
+    border: solid;
+    border-color: #74b0f8;
 }
 
 
