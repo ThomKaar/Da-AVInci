@@ -133,7 +133,6 @@ export default {
     async mounted() {
         let provider = new CategoryProvider();
         this.$data.info = await provider.getCategoryItems();
-        console.log(this.$data.info); // eslint-disable-line
         return;
     },
     methods: {

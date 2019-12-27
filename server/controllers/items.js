@@ -124,7 +124,6 @@ exports.getItemByContentAndLabel = async(req, res) => {
 
 exports.updateItemById = async(req, res) => {
     try {
-        console.log(req.body);
         var params = {
             Item: req.body, 
             TableName: "Item",
@@ -180,7 +179,6 @@ exports.createItem = async(req, res) => {
                 };
                 ddb.putItem(newparams, function(err, data) {
                     if (err) {
-                        console.log("error in the putting");
                         console.log(err);
                     } else {
                         res.json(data);

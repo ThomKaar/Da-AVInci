@@ -96,7 +96,6 @@ exports.updateCategory = async(req, res) => {
 
 exports.deleteCategory = async(req, res) => {
     try {
-        console.log(req.params.name);
         var params = {
             Key: {
                 "name": { S: req.params.name },
