@@ -89,8 +89,6 @@ export default {
           contentType = 'image/png';
         } else if (extension.includes('gif')) {
           contentType = 'image/gif';
-        } else {
-          console.log('Unkown Content Type: please use jpg, jpeg, png, or gif'); // eslint-disable-line
         }
         var reader = new FileReader();
         reader.onloadend = function(e) {

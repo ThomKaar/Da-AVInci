@@ -34,7 +34,6 @@ exports.getImagesById = async(req,res) => {
 
 exports.uploadImage = async(req, res) => {
     try {
-        console.log(req.body);
         AWS.config.update({
             region: "us-east-1",
             accessKeyId: "AKIAUROVSY2CUBVQDMC5",
@@ -42,8 +41,6 @@ exports.uploadImage = async(req, res) => {
           });
 
         let title = req.body.title;
-
-        console.log("config upadted");
         var params = {
                 Bucket: 'da-vinci-image-bucket',
                 Key: "stillLife/" + title + "." + "jpg",
@@ -54,7 +51,6 @@ exports.uploadImage = async(req, res) => {
         s3.upload(params, function(err, data) {
             if (err) console.log(err);
             else {
-                console.log("Within upload");
                 res.json(data);
             }
         });

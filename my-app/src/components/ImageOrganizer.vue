@@ -213,9 +213,7 @@ export default {
                     S: "images",
                   },
                 };
-                itemProvider.updateItem(newId, item).then((response) => {
-                    console.log(response); // eslint-disable-line
-                });
+                itemProvider.updateItem(newId, item);
               });
             }
             
