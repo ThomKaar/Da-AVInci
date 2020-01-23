@@ -14,7 +14,6 @@
 </template>
 <script>
 import SideBarEdit from './SideBarEdit';
-// import ListEdit from './ListEdit';
 import ImageEdit from './ImageEdit';
 export default {
     components: {
