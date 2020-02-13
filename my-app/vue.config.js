@@ -18,9 +18,9 @@ module.exports = {
   pluginOptions: {
     s3Deploy: {
       registry: undefined,
-      awsProfile: 'default',
+      awsProfile: 'mak',
       region: 'us-east-1',
-      bucket: 'da-vinci-site',
+      bucket: 'art-by-makena-kong',
       createBucket: false,
       staticHosting: true,
       staticIndexPage: 'index.html',

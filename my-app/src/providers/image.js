@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export class ImageProvider {
     constructor() {
-		axios.defaults.baseURL = 'http://3.93.231.178:5000';
+		axios.defaults.baseURL = 'http://18.188.95.224:5000';
 		axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 	}
     
