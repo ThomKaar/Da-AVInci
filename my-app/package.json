@@ -9,6 +9,7 @@
     "deploy": "AWS_PROFILE=mak vue-cli-service s3-deploy"
   },
   "dependencies": {
+    "animejs": "^3.1.0",
     "aws-sdk": "^2.578.0",
     "axios": "^0.19.0",
     "core-js": "^3.3.2",

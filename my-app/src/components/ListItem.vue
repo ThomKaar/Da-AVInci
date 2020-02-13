@@ -21,6 +21,7 @@
   </div> 
 </template>
 <script>
+import anime from 'animejs/lib/anime.es.js';
 export default {
     props: [
         'list',
@@ -30,6 +31,143 @@ export default {
         return {};
     },
     mounted() {
+
+
+        var headingAnimation = anime.timeline({ // eslint-disable-line
+                targets: '.heading',
+                delay: function(el, i) { return i * 100},
+                endDelay: 1000,
+                easing: 'easeInOutQuad',
+                direction: 'alternate',
+                loop: true,
+        })
+        .add({color: '#e6ae97', loop: false,})
+        .add({color: '#74b0f8', delay: 1000, loop: false,})
+        .add({ keyframes: [
+                {translateY: 1},
+                {translateX: 1},
+                {translateY: 2},
+                {translateX: 2},
+                {translateY: 1},
+                {translateX: 1},
+                {translateY: 0},
+                {translateX: 0},
+                {translateY: -1},
+                {translateX: -1},
+                {translateY: -2},
+                {translateX: -2},
+                {translateY: 0},
+                {translateX: 0},
+                {translateY: 1},
+                {translateX: 1},
+                {translateY: 2},
+                {translateX: 2},
+                {translateY: 1},
+                {translateX: 1},
+                {translateY: 0},
+                {translateX: 0},
+                {translateY: -1},
+                {translateX: -1},
+                {translateY: -2},
+                {translateX: -2},
+                {translateY: 0},
+                {translateX: 0},
+            ],
+            duration: 2000,
+            loop: true});
+
+        anime({
+            targets: '.heading',
+            translateX: 0,
+            keyframes: [
+                {translateX: 150},
+                {translateX: 0},
+            ],
+            easing: 'easeOutElastic(1, .8)',
+            rotate: '2turn',
+            duration: 5000,
+            loop: false,
+        });
+
+        anime({
+            targets: '.label',
+            keyframes: [
+                {translateY: 1},
+                {translateX: 1},
+                {translateY: 2},
+                {translateX: 2},
+                {translateY: 1},
+                {translateX: 1},
+                {translateY: 0},
+                {translateX: 0},
+                {translateY: -1},
+                {translateX: -1},
+                {translateY: -2},
+                {translateX: -2},
+                {translateY: 0},
+                {translateX: 0},
+            ],
+            easing: 'easeOutElastic(1, .5)',
+            // rotate: '2turn',
+            duration: 1000,
+            loop: true,
+        });
+
+        anime({
+            targets: '.content',
+            keyframes: [
+                {translateY: 1},
+                {translateX: 1},
+                {translateY: 2},
+                {translateX: 2},
+                {translateY: 1},
+                {translateX: 1},
+                {translateY: 0},
+                {translateX: 0},
+                {translateY: -1},
+                {translateX: -1},
+                {translateY: -2},
+                {translateX: -2},
+                {translateY: 0},
+                {translateX: 0},
+            ],
+            easing: 'easeOutElastic(1, .5)',
+            // rotate: '2turn',
+            duration: 1000,
+            loop: true,
+        });
+
+        anime({
+            targets: '.icon',
+            keyframes: [
+                {translateY: 1},
+                {translateX: 1},
+                {translateY: 2},
+                {translateX: 2},
+                {translateY: 1},
+                {translateX: 1},
+                {translateY: 0},
+                {translateX: 0},
+                {translateY: -1},
+                {translateX: -1},
+                {translateY: -2},
+                {translateX: -2},
+                {translateY: 0},
+                {translateX: 0},
+            ],
+            rotate: {
+                value: 450,
+                duration: 2000,
+                easing: 'easeInOutSine'
+            },
+            easing: 'easeOutElastic(1, .5)',
+            // rotate: '2turn',
+            duration: 1000,
+            loop: true,
+        });
+
+
+        
     },
     methods: {
         imageSelect(imageIds) {
@@ -37,6 +175,7 @@ export default {
                 this.$root.$emit('updateGallery', imageIds);
             }
         }
+        
     }
 }
 </script>

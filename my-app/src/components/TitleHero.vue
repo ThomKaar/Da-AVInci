@@ -1,11 +1,11 @@
 <template>
     <div class="title">
-        <h1> Da Avinci</h1> 
+        <h1> Art By Makena </h1> 
     </div>
 </template>
 
 <script>
-// import { ItemProvider } from '../providers';
+import anime from 'animejs/lib/anime.es.js';
 export default {
     data() {
         
@@ -14,9 +14,18 @@ export default {
         } 
     },
     async mounted() {
-        // let itemProvider = new ItemProvider();
-        // let titleObj = await itemProvider.getTitleItem();
-        // this.message = titleObj.Item.content.S;
+        anime({
+            targets: '.title',
+            translateX: 0,
+            keyframes: [                
+                {translateX: 250},
+                {translateX: 0},
+            ],
+            easing: 'easeOutElastic(1, .8)',
+            // rotate: '2turn',
+            duration: 4000,
+            loop: true,
+        });
     }
 }
 </script>

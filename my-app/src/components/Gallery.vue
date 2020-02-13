@@ -1,6 +1,6 @@
  <template>
     <div>
-        <v-carousel
+        <v-carousel class="carousel"
             hide-delimiters
             >
             <v-carousel-item
@@ -31,7 +31,7 @@
                 contain
                 :src="image.url.S"
                 class="previewImage">
-                </v-img> 
+                </v-img>
             </div>
         </div>
         
@@ -39,6 +39,7 @@
 </template>
 <script>
 import { ImageProvider } from '../providers';
+import anime from 'animejs/lib/anime.es.js';
 export default {
     data () {
         return {
@@ -65,6 +66,49 @@ export default {
             let backendImages = await imageProvider.getImagesByCollection(numids);
             this.$data.images = backendImages;
         });
+
+            anime({
+            targets: "#wrapper",
+            keyframes: [
+                {translateY: 1},
+                {translateX: 1},
+                {translateY: 2},
+                {translateX: 2},
+                {translateY: 1},
+                {translateX: 1},
+                {translateY: 0},
+                {translateX: 0},
+                {translateY: -1},
+                {translateX: -1},
+                {translateY: -1},
+                {translateX: -1},
+                {translateY: 0},
+                {translateX: 0},
+            ],
+            duration: 1000,
+            loop: true});
+
+
+             anime({
+            targets: ".carousel",
+            keyframes: [
+                {translateY: 5},
+                {translateX: 5},
+                {translateY: 2},
+                {translateX: 2},
+                {translateY: 5},
+                {translateX: 5},
+                {translateY: 0},
+                {translateX: 0},
+                {translateY: -5},
+                {translateX: -5},
+                {translateY: -5},
+                {translateX: -2},
+                {translateY: 0},
+                {translateX: 0},
+            ],
+            duration: 1000,
+            loop: true});
     },
 }
 </script>
