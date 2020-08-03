@@ -42,7 +42,7 @@ exports.uploadImage = async(req, res) => {
 
         let title = req.body.title;
         var params = {
-                Bucket: 'da-vinci-image-bucket',
+                Bucket: 'art-by-makena-kong',
                 Key: "stillLife/" + title + "." + "jpg",
                 Body: Buffer.from(req.body.file, "binary"),
                 ACL: "public-read",
