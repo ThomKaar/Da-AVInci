@@ -1,8 +1,9 @@
 import axios from 'axios';
+import { baseUrl } from './index.js';
 
 export class CategoryProvider {
     constructor() {
-		axios.defaults.baseURL = 'http://18.188.95.224:5000';
+		axios.defaults.baseURL = baseUrl;
 		axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 	}
 
@@ -21,6 +22,9 @@ export class CategoryProvider {
 	getCategoryItems(){
 		return axios.get('/category/all').then((responses) => {		
 			return responses.data;
+		})
+		.catch((err) => {
+			console.log(err); // eslint-disable-line
 		});
 	}
 

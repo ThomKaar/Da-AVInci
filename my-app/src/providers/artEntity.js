@@ -1,8 +1,9 @@
 import axios from 'axios';
+import { baseUrl } from './index';
 
 export class ArtEntityProvider {
     constructor() {
-		axios.defaults.baseURL = 'http://18.188.95.224:5000';
+		axios.defaults.baseURL = baseUrl;
 		axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 	}
     
