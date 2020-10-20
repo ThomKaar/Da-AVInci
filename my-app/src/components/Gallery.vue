@@ -2,16 +2,12 @@
     <div>
         <v-carousel class="carousel"
             hide-delimiters
+            show-arrows-on-hover
             >
             <v-carousel-item
                 v-for="(image) of images"
                 :key="image.url.S"
             >
-                
-                <v-row class="title-row"
-                >
-                    <p class="title-display">{{ image.title.S.toLowerCase() }}</p>
-                </v-row>
                 <v-img
                     contain
                     max-height="475px"
@@ -19,21 +15,11 @@
                     :src=image.url.S
                     >
                 </v-img>
+                <v-row class="title-row">
+                    <p class="title-display">{{ image.title.S.toLowerCase() }}</p>
+                </v-row>
             </v-carousel-item>
         </v-carousel>
-        <div id="wrapper"> 
-            <div 
-            v-for="(image,i) of images"
-            :key="i"
-            class="previewDiv"
-            >
-                <v-img
-                contain
-                :src="image.url.S"
-                class="previewImage">
-                </v-img>
-            </div>
-        </div>
         
     </div>
 </template>

@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Home from './components/Home.vue';
+import Home from './views/Home.vue';
 
 Vue.use(Router);
 
@@ -14,14 +14,19 @@ const router = new Router({
       component: Home,
     },
     {
+      path: '/work',
+      name: "Work",
+      component: () => import('./views/Work.vue'),
+    },
+    {
         path: '/login',
         name: 'login',
-        component: () => import('./components/Login.vue'),
+        component: () => import('./views/Login.vue'),
     },
     {
       path: '/editSite',
       name: 'editSite',
-      component: () => import('./components/Edit.vue'),
+      component: () => import('./views/Edit.vue'),
     },
     {
       path: '*',
