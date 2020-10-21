@@ -1,26 +1,47 @@
 <template>
-  <div class="loginForm">
-    <v-form id='form' v-model="valid">
+  <div class="login">
+    <h2>{{title}}</h2>
+    <v-form 
+      id='login-form' 
+      v-model="valid"
+      >
+        <v-container>
+          <v-row>
+            <v-col cols="12" md="6" lg="6" xl="6">
               <v-text-field
               v-model="UserName"
               label="UserName"
               required
               ></v-text-field>
+            </v-col>
+            <v-col cols="12" md="6" lg="6" xl="6">
               <v-text-field
               v-model="Password"
               label= "Password"
               :type="'password'"
               required
               ></v-text-field>
-      </v-form>
-      <v-btn id="loginBtn" v-on:click="login">
-          Login
-      </v-btn>
+            </v-col>
+          </v-row>
+          <v-row>        
+            <v-btn id="login-btn" @click="login">
+              Login
+            </v-btn>
+          </v-row>
+        </v-container>
+        
+
+    </v-form>
   </div>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      title: "For Makena Only!!!!"
+    }
+  },
   methods: {
     login() {
       this.$router.push('/editSite');
@@ -30,7 +51,12 @@ export default {
 </script>
 
 <style scoped>
-.loginForm {
-  padding-bottom: 5%;  
+
+.login {
+  transform: translateY(50%);
+}
+
+#login-form {
+  background: transparent
 }
 </style>

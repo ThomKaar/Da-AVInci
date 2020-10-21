@@ -1,6 +1,9 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
+import Work from './views/Work.vue';
+import Login from './views/Login.vue';
+import Edit from './views/Edit.vue';
 
 Vue.use(Router);
 
@@ -16,17 +19,17 @@ const router = new Router({
     {
       path: '/work',
       name: "Work",
-      component: () => import('./views/Work.vue'),
+      component: Work,
     },
     {
         path: '/login',
         name: 'login',
-        component: () => import('./views/Login.vue'),
+        component: Login,
     },
     {
       path: '/editSite',
       name: 'editSite',
-      component: () => import('./views/Edit.vue'),
+      component: Edit,
     },
     {
       path: '*',

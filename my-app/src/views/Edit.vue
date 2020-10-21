@@ -1,73 +1,65 @@
 <template>
-    <div class="editVue">
-        <nav class="nav">
-            <a  class="sideBar" v-on:click="makeActive('sideBar')">
-                Side Bar Edit
-            </a>
-            <a class="imageEdit" v-on:click="makeActive('imageEdit')">
-                Image Edit
-            </a>
-        </nav>
-        <SideBarEdit v-if="this.active == 'sideBar'" class="editContent"></SideBarEdit> 
-        <ImageEdit v-if="this.active == 'imageEdit'" class=editContent></ImageEdit>
+    <div class="edit">
+        <v-tabs
+          v-model="tab"
+          background-color="transparent"
+          color="#A15995"
+          grow
+          align-with-title
+        >
+          <v-tabs-slider color="#A15995"></v-tabs-slider>
+
+          <v-tab
+            v-for="page in pages"
+            :key="page"
+          >
+            <h3>{{page.title}}</h3>
+          </v-tab>
+        </v-tabs>
+
+        <v-tabs-items v-model="tab">
+            <v-tab-item
+                v-for="page in pages"
+                :key="page"
+            >
+                <v-container><component :is="page.component" /></v-container>
+                
+            </v-tab-item>
+        </v-tabs-items>
+        
+        
   </div>
 </template>
 <script>
-import SideBarEdit from '../components/edit/SideBarEdit';
-// import ListEdit from './ListEdit';
+import InfoEdit from '../components/edit/InfoEdit';
 import ImageEdit from '../components/edit/ImageEdit';
+
 export default {
     components: {
-        SideBarEdit,
-        ImageEdit,
+        InfoEdit, // eslint-disable-line vue/no-unused-components
+        ImageEdit, // eslint-disable-line vue/no-unused-components
     },
     data: function() {
         return {
-            active: 'sideBar',
-        }
-    },
-    methods: {
-        makeActive: function(item) {
-            this.active = item;
+            tab: null,
+            pages: [
+                {
+                    title: "info",
+                    component: InfoEdit
+                },
+                {
+                    title: "images",
+                    component: ImageEdit
+                }
+            ]
         }
     }
 }
 </script>
+
 <style scoped>
-nav{
-    width: fit-content;
-    margin: 3% auto 2% auto;
-    background-color:#29B6;
-    box-shadow:0 1px 1px #ccc;
-    border-radius:2px;  
+.edit {
+    margin: 2.5% 10% 0% 10%
 }
 
-nav a{
-    display:inline-block;
-    padding: 18px 30px;
-    color:#fff !important;
-    font-weight:bold;
-    font-size:16px;
-    text-decoration:none !important;
-    line-height:1;
-    text-transform: uppercase;
-    background-color:transparent;
-
-    -webkit-transition:background-color 0.25s;
-    -moz-transition:background-color 0.25s;
-    transition:background-color 0.25s;
-}
-
-nav a:first-child{
-    border-radius:2px 0 0 2px;
-}
-
-nav a:last-child{
-    border-radius:0 2px 2px 0;
-}
-
-nav.sideBar .sideBar,
-nav.imageEdit .imageEdit {
-    background-color:#e35885;
-}
 </style>
