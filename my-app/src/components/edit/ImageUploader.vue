@@ -24,7 +24,7 @@
           Upload Image
         </v-card-title>
 
-        <form class="form ma-5"> 
+        <form class="form my-5 mx-10"> 
 
           <v-file-input
             accept="image/*"

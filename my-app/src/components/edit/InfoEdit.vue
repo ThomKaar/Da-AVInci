@@ -1,5 +1,23 @@
 <template>
     <div id="edit-info">
+
+        <!-- create new -->
+        <v-row justify="end" class='ma-2'>
+            <v-btn 
+            outlined
+            @click="addHeader()">
+                <v-icon>mdi-plus</v-icon>
+                Create New Section
+            </v-btn>
+        </v-row>
+
+        <!--header-->
+        <v-row 
+        class="my-5 mx-1"
+        justify="start">
+            <h2>Sections ({{totalSections}})</h2>
+        </v-row>
+
         <v-row>
             <v-col 
             cols="12" sm="3" md="4"
@@ -7,7 +25,7 @@
             :key="heading.category">
                 
                 <v-card flat
-                class="mx-auto ma-5"
+                class="mx-auto mx-5"
                 outlined 
                 >
                     <v-card-title 
@@ -177,15 +195,6 @@
                 </v-card>
             </v-col>
         </v-row>
-        
-        <div class="mt-5">
-            <v-btn 
-            outlined
-            @click="addHeader()">
-                <v-icon>mdi-plus</v-icon>
-                Create New Category
-            </v-btn>
-        </div>
     </div>
 </template>
 
@@ -210,6 +219,11 @@ export default {
         let provider = new CategoryProvider();
         this.$data.info = await provider.getCategoryItems()
         return;
+    },
+    computed: {
+        totalSections: function() {
+            return this.$data.info.length
+        }
     },
     methods: {
         toggleShow: function(category) {

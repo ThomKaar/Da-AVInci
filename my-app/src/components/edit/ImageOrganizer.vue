@@ -3,21 +3,49 @@
     <!-- eslint-disable -->
     <div> 
     
+    <!--header-->
     <v-row 
-    class="ma-1"
+    class="my-5 mx-1"
     justify="start">
-      <h2>Gallery</h2>
-      <v-btn
-      icon>
-        <v-icon>mdi-pencil-outline</v-icon>
+      <h2>Gallery ({{totalImages}})</h2>
+      <v-btn 
+      icon
+      @click="editMode = !editMode"
+      >
+        <v-icon>
+          {{ editMode ? 'mdi-close-circle-outline' :'mdi-pencil-outline'}}
+        </v-icon>
       </v-btn>
     </v-row>
 
-    <v-row 
-    v-show="true"
+    <!--filters-->
+    <v-row
+    v-show="!editMode"
     class="ma-1">
-      <!--active collections-->
-      <h3>Collections</h3>
+      <v-item-group>
+        <v-btn disabled text>filter by</v-btn>
+        <v-btn 
+        text 
+        :color="filter == '' ? '#A15995' : ''"
+        @click="filter = ''"> 
+          all ({{totalImages}})
+        </v-btn>
+        <v-btn 
+        v-for="tag in tags" 
+        :key="'filterby:' +tag"
+        text
+        :color="filter === tag ? '#A15995' : ''"
+        @click="filter = tag"
+        >
+          {{tag}} ({{totalImagesByTag(tag)}})
+        </v-btn>
+      </v-item-group>
+    </v-row>
+
+    <!--edit-->
+    <v-row 
+    v-show="editMode"
+    class="ma-1">
       <v-chip-group
       column
       active-class="primary--text"
@@ -33,12 +61,12 @@
     </v-btn> 
     </v-row>
 
-    <!--images -->
+    <!--image gallery -->
     <v-row>
       <v-col 
       class="d-flex child-flex"
       cols="4"
-      v-for="(image, i) in displayImages"
+      v-for="(image, i) in filteredImages"
       :key="i">
         <v-card 
           class="mx-auto">  
@@ -70,6 +98,7 @@
     </v-row>
     </div>
 </template>
+
 <script>
 import { ItemProvider } from '../../providers';
 import { ImageProvider } from '../../providers'; 
@@ -78,6 +107,7 @@ export default {
     },
     data: function() {
         return {
+            editMode: false,
             tags: ['default'],
             displayImages: [],
             activeCollection: 'default',
@@ -86,7 +116,22 @@ export default {
             },
             newCategory: '',
             dialog: false,
+            filter: ''
         };
+    },
+    computed: {
+      totalImages: function() {
+        return this.$data.displayImages.length
+      },
+      totalImagesByTag: function() {
+        return tag => this.$data.displayImages.filter(el => el.collections.includes(tag)).length
+      },
+      filteredImages: function() {
+        /*eslint-disable no-console */
+        console.log(this.$data.filter)
+        return this.$data.filter === '' ? this.$data.displayImages : 
+          this.$data.displayImages.filter(el => el.collections.includes(this.$data.filter))
+      }
     },
     methods: {
         addTag: function(newCategory) {

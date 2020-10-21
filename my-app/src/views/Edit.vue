@@ -1,5 +1,10 @@
 <template>
     <div class="edit">
+
+        <v-row justify="center" class="mb-10">
+            <h1>Welcome back Makena :)</h1>
+        </v-row>
+
         <v-tabs
           v-model="tab"
           background-color="transparent"
@@ -44,11 +49,11 @@ export default {
             tab: null,
             pages: [
                 {
-                    title: "info",
+                    title: "sections",
                     component: InfoEdit
                 },
                 {
-                    title: "images",
+                    title: "gallery",
                     component: ImageEdit
                 }
             ]
@@ -59,7 +64,7 @@ export default {
 
 <style scoped>
 .edit {
-    margin: 2.5% 10% 0% 10%
+    margin: 0% 10% 0% 10%
 }
 
 </style>
