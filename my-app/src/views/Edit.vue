@@ -11,7 +11,7 @@
 
           <v-tab
             v-for="page in pages"
-            :key="page"
+            :key="page.title"
           >
             <h3>{{page.title}}</h3>
           </v-tab>
@@ -20,7 +20,7 @@
         <v-tabs-items v-model="tab">
             <v-tab-item
                 v-for="page in pages"
-                :key="page"
+                :key="page.title"
             >
                 <v-container><component :is="page.component" /></v-container>
                 

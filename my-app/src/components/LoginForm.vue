@@ -11,16 +11,16 @@
               <v-text-field
               v-model="UserName"
               label="UserName"
-              required
-              ></v-text-field>
+              required 
+              />
             </v-col>
             <v-col cols="12" md="6" lg="6" xl="6">
               <v-text-field
               v-model="Password"
               label= "Password"
               :type="'password'"
-              required
-              ></v-text-field>
+              required 
+              />
             </v-col>
           </v-row>
           <v-row>        

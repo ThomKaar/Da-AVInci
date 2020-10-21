@@ -12,8 +12,7 @@
                 contain
                 aspect-ratio=1
                 :src=image.url.S
-                >
-                </v-img>
+                />
                 <p class="image-title text-center">
                     {{ image.title.S.toLowerCase() }}
                 </p>

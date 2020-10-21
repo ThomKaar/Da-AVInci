@@ -1,44 +1,70 @@
 <template>
-     <v-card raised
-        class="mx-auto"
-        max-width="344"
-        outlined>
-    <form class="form">
-      <v-list-item three-line>
-        <v-list-item-content>
-          <v-list-item-title class="headline mb-1 title">Image Uploader</v-list-item-title>
-          <v-text-field
-            class="titleField"
-            v-model="title"
-            label="Title"
-          ></v-text-field>
-          
-        </v-list-item-content>
-      
-      </v-list-item>
-    <v-list-item>
-      <v-list-item-content>
-        <input class="fileInput" type="file" name="file" @change="onFileUpdate">
-      </v-list-item-content>
-    </v-list-item>
-    
-    <v-list-item>
-      <v-list-item-content>
-        <v-card-actions>
-          <v-btn 
-          class="button"
-          type="submit"
-          v-on:click.prevent="uploadFiles"
-          :loading="loading"
-          >Upload</v-btn>
-        </v-card-actions>
-      </v-list-item-content>
-    </v-list-item>
+  <v-row justify="end" class='ma-2'>
+    <v-dialog
+    v-model="dialog"
+    persistent
+    max-width="600px"
+    >
+      <template 
+      v-slot:activator="{ on, attrs }">
+          <v-btn
+          outlined
+          v-bind="attrs"
+          v-on="on"
+          >
+          <v-icon>mdi-upload</v-icon>
+          Upload New Image
+          </v-btn>
+      </template>
+      <v-card 
+      flat
+      class="mx-auto"
+      outlined >
+        <v-card-title>
+          Upload Image
+        </v-card-title>
 
-    </form>
-    
-  </v-card>
+        <form class="form ma-5"> 
+
+          <v-file-input
+            accept="image/*"
+            label="Choose Image File"
+            prepend-icon="mdi-file-image"
+            @change="onFileUpdate"
+          />
+
+          <v-text-field
+            v-model="title"
+            prepend-icon="mdi-pencil-outline"
+            label="Image Name"
+          />
+        </form>
+
+        <v-card-actions class='my-2 mx-5'>
+          <v-spacer />
+          <v-btn 
+          outlined
+          color="success"
+          type="submit"
+          @click.prevent="uploadFiles"
+          :loading="loading"
+          >
+            Upload
+          </v-btn>
+          <v-btn
+          color="error"
+          outlined
+          @click="dialog = false"
+          >
+            Cancel
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </v-row>
 </template>
+
+
 <script>
 // import vue2Dropzone from 'vue2-dropzone'
 // import 'vue2-dropzone/dist/vue2Dropzone.min.css'
@@ -46,18 +72,19 @@ import Vue from 'vue';
 import FileUpload from 'v-file-upload';
 import vue2Dropzone from 'vue2-dropzone';
 import 'vue2-dropzone/dist/vue2Dropzone.min.css'
-
 import { ImageProvider, ItemProvider } from '../../providers';
 Vue.use(FileUpload);
 Vue.use(vue2Dropzone);
+
 export default {
     components: {
     },
     data: function() {
         return {
+          dialog: false,
           url: 'http://localhost:3000/image/upload',
           headers: {},
-          filesUploaded: [],
+          fileUploaded: {},
           title: "",
           fileExtension: "",
           loading: false,
@@ -69,27 +96,19 @@ export default {
         return file.myThumbUrlProperty
       },
       onFileUpdate: function(file) {
-        this.$data.filesUploaded = file.target.files[0];
-        this.$data.title = file.target.files[0].name.split('.')[0];
-        this.$data.fileExtension = file.target.files[0].name.split('.')[1];
-        
+        this.$data.fileUploaded = file;
+        this.$data.title = file.name.split('.')[0];
+        this.$data.fileExtension = file.name.split('.')[1];
       },
       uploadFiles: function() {
         // this.$data.loading = true;
         // emit event to reload the imageOrganizer once the image is uploaded
         // set loading until the upload is done...
         
-        let file = this.$data.filesUploaded;
+        let file = this.$data.fileUploaded;
         let title = this.$data.title;
-        let extension = this.$data.fileExtension;
-        let contentType = '';
-        if (extension.includes('jpeg') || extension.includes('jpg')) {
-          contentType = 'image/jpeg';
-        } else if (extension.includes('png')) { 
-          contentType = 'image/png';
-        } else if (extension.includes('gif')) {
-          contentType = 'image/gif';
-        }
+        let contentType = `image/${this.$data.fileExtension}`;
+
         var reader = new FileReader();
         reader.onloadend = function(e) {
           // save this data1111 and send to server
@@ -109,32 +128,14 @@ export default {
           });
         };
         reader.readAsBinaryString(file);
+
+        this.$data.dialog = false;
+
       },
-      mounted: function() {
-        
-      }
+      mounted: function() {}
     }
 }
 </script>
+
 <style scoped>
-.title {
-  text-align: center;
-}
-
-.button {
-  text-align: center;
-  margin-left: 35%;
-}
-
-.form {
-  text-align: center;
-}
-
-.fileInput {
-  margin-left: 15%;
-}
-.titleField {
-  margin-left: 10%;
-  margin-right: 10%;
-}
 </style>

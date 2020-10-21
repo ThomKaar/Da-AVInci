@@ -1,7 +1,7 @@
 <template>
   <div class="tile">
     <div id="form"> 
-      <LoginForm></LoginForm>
+      <LoginForm />
     </div>
   </div>
 </template>
