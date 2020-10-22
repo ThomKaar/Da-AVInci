@@ -1,20 +1,25 @@
 
 <template>
-    <!-- eslint-disable -->
-    <div> 
+  <!-- eslint-disable -->
+  <v-container fluid> 
     
     <!--header-->
     <v-row 
     class="my-5 mx-1"
     justify="start">
       <h2>Gallery ({{totalImages}})</h2>
-      <v-btn 
-      icon
-      @click="editMode = !editMode"
+      <v-btn icon
+      v-show="!editMode"
+      @click="filter =''; editMode = true"
       >
-        <v-icon>
-          {{ editMode ? 'mdi-close-circle-outline' :'mdi-pencil-outline'}}
-        </v-icon>
+        <v-icon>mdi-pencil-outline</v-icon>
+      </v-btn>
+      <v-btn text small
+      class="mt-2"
+      v-show="editMode"
+      @click="editMode = false"
+      > 
+        <u>Stop Editing</u>
       </v-btn>
     </v-row>
 
@@ -24,16 +29,14 @@
     class="ma-1">
       <v-item-group>
         <v-btn disabled text>filter by</v-btn>
-        <v-btn 
-        text 
+        <v-btn text 
         :color="filter == '' ? '#A15995' : ''"
         @click="filter = ''"> 
           all ({{totalImages}})
         </v-btn>
-        <v-btn 
+        <v-btn text
         v-for="tag in tags" 
         :key="'filterby:' +tag"
-        text
         :color="filter === tag ? '#A15995' : ''"
         @click="filter = tag"
         >
@@ -45,21 +48,58 @@
     <!--edit-->
     <v-row 
     v-show="editMode"
-    class="ma-1">
-      <v-chip-group
-      column
-      active-class="primary--text"
-      >
-        <v-chip v-for="(tag,i) in tags" :key="tag" v-on:click="changeActiveCollection(tag)">
-          {{ tag }}
-          <v-icon class="removeTag" v-on:click.prevent="removeTag(i)" x-small>mdi-close-circle-outline</v-icon>
-        </v-chip>
-      </v-chip-group>
+    class="ma-0 fluid">
 
-      <v-btn class="confirmButton" v-on:click="updateCollections()">
-        Confirm
-    </v-btn> 
+    <v-card
+    outlined flat
+    width="100%"
+    class="px-5"
+    >
+
+      <v-card-title>
+        <v-btn 
+        x-large text disabled class='pb-1'>
+          Collection
+        </v-btn>
+        <v-select
+        class="mx-5"
+        v-model="activeCollection"
+        :items="tags"
+        />
+        <v-btn 
+        x-large text disabled class='pb-1'>
+          has {{totalImagesByTag(activeCollection)}} images.
+        </v-btn>
+      </v-card-title>
+
+      <v-card-actions class="mx-5 mb-2">
+        <v-btn 
+        text small
+        class="pa-0 ml-2"
+        @click.prevent="removeTag(i)"
+        >
+          <v-icon color="error" x-small>mdi-delete</v-icon>
+          <u>
+          Delete Collection: 
+          {{activeCollection}} ({{totalImagesByTag(activeCollection)}})
+          </u>
+        </v-btn>
+        <v-spacer />
+        <v-btn outlined 
+          color="success"
+          @click="updateCollections(); editMode=false">
+            <v-icon>mdi-check-circle-outline</v-icon>
+            Save Changes
+          </v-btn> 
+          <v-btn outlined 
+          @click="editMode = false; activeCollection='default'">
+            <v-icon medium>mdi-close-circle-outline</v-icon>
+            Cancel Changes
+          </v-btn>
+      </v-card-actions>
+    </v-card>
     </v-row>
+
 
     <!--image gallery -->
     <v-row>
@@ -68,35 +108,57 @@
       cols="4"
       v-for="(image, i) in filteredImages"
       :key="i">
+      
         <v-card 
-          class="mx-auto">  
+        class="mx-auto"
+        outlined flat
+        @click.prevent="makeActive(i, activeCollection)"
+        >  
+          <!--hidey div-->
+          <v-row justify="center">
+
+            <v-overlay
+          :absolute="editMode"
+          :value="image.collections.includes(activeCollection)"
+          @click.prevent="makeActive(i, activeCollection)"
+        >
+        <v-icon large
+              v-if="image.collections.includes(activeCollection)"  
+              color="white">
+                mdi-check-circle
+              </v-icon>
+          </v-overlay>
+
+          
+
           <v-card-title>{{image.title.S}}</v-card-title>      
           <div class="d-flex flex-no-wrap justify-start mx-5 mb-5">
-    
+  
             <v-img
             max-width="250px"
             class="selectionImage"
             :src=image.url.S
-            @click.prevent="makeActive(i, activeCollection)"
             >
-                <v-icon v-if="image.collections.includes(activeCollection)" medium class="selectCheck">mdi-check-circle</v-icon>
-            </v-img>
+                
+          </v-img>
              
-            <v-card-subtitle class="ml-2"> 
-              <h4>Collections:</h4>
-              <ul>
-                <li
-                 v-for="collection in image.collections"
-                 :key="collection +'-image' + i ">
-                 {{collection}}
-                 </li>
-              </ul>
-            </v-card-subtitle>
+          <v-card-subtitle class="ml-2"> 
+            <h4>Collections:</h4>
+            <ul>
+              <li
+                v-for="collection in image.collections"
+                :key="collection +'-image' + i ">
+                {{collection}}
+                </li>
+            </ul>
+          </v-card-subtitle>
+        
           </div>
+                    </v-row>
         </v-card>
       </v-col>
     </v-row>
-    </div>
+  </v-container>
 </template>
 
 <script>
@@ -127,10 +189,13 @@ export default {
         return tag => this.$data.displayImages.filter(el => el.collections.includes(tag)).length
       },
       filteredImages: function() {
-        /*eslint-disable no-console */
-        console.log(this.$data.filter)
         return this.$data.filter === '' ? this.$data.displayImages : 
           this.$data.displayImages.filter(el => el.collections.includes(this.$data.filter))
+      },
+      activeImages: function(){
+          return this.$data.activeCollection === '' 
+          ? this.$data.displayImages : 
+          this.$data.displayImages.filter(el => el.collections.includes(this.$data.activeCollection))
       }
     },
     methods: {
@@ -172,9 +237,6 @@ export default {
             } else {
               this.$data.displayImages[i].collections.push(activeCollection);
             }
-        },
-        changeActiveCollection: function(collection) {
-          this.$data.activeCollection = collection;
         },
         connectImagesToItems: function(items, images) {
           // Don't look at this ugly as heck code...
@@ -238,10 +300,6 @@ export default {
     margin-top: auto;
     margin-bottom: auto;
 }
-.selectCheck {
-    width: 100%;
-    color: blue;
-}
 .confirmButton {
     width: 10%;
     margin: auto;
@@ -261,11 +319,8 @@ export default {
   width: 100%;
 }
 
-h5 {
-  text-align: center;
-}
-
 .textField {
   height: 10%;
 }
+
 </style>
