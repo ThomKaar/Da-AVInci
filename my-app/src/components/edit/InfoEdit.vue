@@ -21,8 +21,8 @@
         <v-row>
             <v-col 
             cols="12" sm="3" md="4"
-            v-for="heading of info"
-            :key="heading.category">
+            v-for="(heading,h) of info"
+            :key="'heading' + h">
                 
                 <v-card flat
                 class="mx-auto mx-5"
@@ -34,11 +34,11 @@
                             <v-spacer />
                             <v-btn
                             icon
-                            @click="toggleShow(heading.category) "
+                            @click="toggleShow(h) "
                             >
                                 <v-icon>
                                     {{ 
-                                        show === heading.category
+                                        show === h
                                         ? 'mdi-close-circle-outline'  :'mdi-pencil-outline' 
                                     }}
                                 </v-icon>
@@ -46,7 +46,7 @@
                     </v-card-title>
 
                     <v-card-subtitle 
-                    v-show="show !== heading.category"
+                    v-show="show !== h"
                     class="ma-2">
                         <div
                         v-for="(item, i) of heading.items"
@@ -64,7 +64,7 @@
                     <!-- EDIT BOX -->
                     <v-expand-transition>
                         <div 
-                        v-show="show === heading.category">
+                        v-show="show === h">
                             <v-divider />
                             <v-flex class="pl-5 pr-5">
 
@@ -130,7 +130,9 @@
                                         >
                                             <template v-slot:append-outer>
                                                 <a 
-                                                class="noDecorationLink" href="https://materialdesignicons.com/">
+                                                class="noDecorationLink" 
+                                                target="_blank"
+                                                href="https://materialdesignicons.com/">
                                                     <v-icon>
                                                         mdi-help-circle-outline
                                                     </v-icon>
@@ -212,13 +214,20 @@ export default {
                 "images",
                 "simpleLink",
             ],
-            show: "",
+            show: -1,
         }
     },
     async mounted() {
+        /* eslint-disable no-console */
+        console.log("mounted")
         let provider = new CategoryProvider();
+        console.log(provider)
+        let headers = await provider.getAllCategories()
+        console.log(headers)
         this.$data.info = await provider.getCategoryItems()
-        return;
+        
+        console.log(this.$data.info.length)
+        //return;
     },
     computed: {
         totalSections: function() {
@@ -226,8 +235,8 @@ export default {
         }
     },
     methods: {
-        toggleShow: function(category) {
-            this.$data.show = (this.$data.show === category ? '' : category)
+        toggleShow: function(cat_index) {
+            this.$data.show = (this.$data.show === cat_index ? -1 : cat_index)
         },
         addItem: function(i) {
             let emptyItem = {
@@ -257,11 +266,14 @@ export default {
             this.$data.info[i].items.splice(j,1, newItem);
         },
         updateItems: function(i) {
-            let category = {
-                    name: this.$data.info[i].category,
-                    items: [],
-            };
             let itemProvider = new ItemProvider();
+            let categoryProvider = new CategoryProvider();
+
+            let category = {
+                name: this.$data.info[i].category,
+                items: [],
+            };
+            
             for (let item of this.$data.info[i].items) {
                 if (item.id.N !== 'UNKOWN') {
                     category.items.push(item.id.N);
@@ -273,7 +285,6 @@ export default {
                     itemProvider.updateItem(id, item);
                 }
             }
-            let categoryProvider = new CategoryProvider();
             categoryProvider.updateCateory(category);
         },
         newId: function() {
