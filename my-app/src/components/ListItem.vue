@@ -32,12 +32,6 @@
                 >
                     {{ item.label.S.toLowerCase() }}
                 </h4>
-                <h4 
-                v-if="item.content && item.content.S != 'images' && item.content.S != 'internal'" 
-                class="content"
-                > 
-                    {{ item.content.S.toLowerCase() }} 
-                </h4>
             </a>
 
             <!-- gallery links -->
@@ -51,10 +45,6 @@
                 class="label"
                 >
                     {{ item.label.S.toLowerCase() }}
-                </h4>
-                <h4 
-                    v-if="item.content && item.content.S != 'images' && item.content.S != 'internal'" class="content"> 
-                    {{ item.content.S.toLowerCase() }} 
                 </h4>
             </a>
         </li>
@@ -121,13 +111,6 @@ a {
     float: left;
     color: #000;
     margin-top: 0.5%;
-}
-.content {
-    font-size: 16px;
-    width: 50%;
-    float: left;
-    margin-left: 2.5%;
-    text-align: left;
 }
 .link:hover .icon {
     color: #A15995;

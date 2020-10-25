@@ -27,7 +27,9 @@
                 v-for="page in pages"
                 :key="page.title"
             >
-                <v-container><component :is="page.component" /></v-container>
+                <v-container>
+                    <component :is="page.component" />
+                </v-container>
                 
             </v-tab-item>
         </v-tabs-items>

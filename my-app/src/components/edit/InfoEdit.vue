@@ -5,7 +5,7 @@
         <v-row justify="end" class='ma-2'>
             <v-btn 
             outlined
-            @click="addHeader()">
+            @click="addSection()">
                 <v-icon>mdi-plus</v-icon>
                 Create New Section
             </v-btn>
@@ -18,183 +18,13 @@
             <h2>Sections ({{totalSections}})</h2>
         </v-row>
 
+        <!--sections-->
         <v-row>
             <v-col 
             cols="12" sm="3" md="4"
-            v-for="(heading,h) of info"
-            :key="'heading' + h">
-                
-                <v-card flat
-                class="mx-auto mx-5"
-                outlined 
-                >
-                    <v-card-title 
-                    class="ma-2">
-                        {{heading.category}} ({{heading.items.length}})
-                            <v-spacer />
-                            <v-btn
-                            icon
-                            @click="toggleShow(h) "
-                            >
-                                <v-icon>
-                                    {{ 
-                                        show === h
-                                        ? 'mdi-close-circle-outline'  :'mdi-pencil-outline' 
-                                    }}
-                                </v-icon>
-                            </v-btn>
-                    </v-card-title>
-
-                    <v-card-subtitle 
-                    v-show="show !== h"
-                    class="ma-2">
-                        <div
-                        v-for="(item, i) of heading.items"
-                        :key="heading.category + '-item' + i"
-                        >
-                            <p v-if="item.type.S==='images'">
-                                {{item.label.S}}
-                            </p>
-                            <p v-else>
-                                {{item.content.S}}
-                            </p>
-                        </div>
-                    </v-card-subtitle>
-            
-                    <!-- EDIT BOX -->
-                    <v-expand-transition>
-                        <div 
-                        v-show="show === h">
-                            <v-divider />
-                            <v-flex class="pl-5 pr-5">
-
-                                <!-- EDIT CATEGORY -->
-                                <h5 class="pt-5 pb-5">EDIT CATEGORY NAME</h5>
-                                <v-text-field
-                                v-model="heading.category"
-                                label="Name"
-                                />
-
-                                <v-divider />
-
-                                <!-- EDIT CATEGORY ITEMS -->
-                                <h5 class="pt-5 pb-5">EDIT ITEMS</h5>
-                                <div
-                                v-for="(item, j) of heading.items"
-                                :key=j
-                                class="item mb-5">
-
-                                    <v-row>
-                                        <v-col cols="1">
-                                            <!-- delete item button -->
-                                            <v-btn 
-                                            small icon
-                                            color="error"
-                                            @click="deleteItem(i,j)">
-                                                <v-icon >
-                                                    mdi-delete
-                                                </v-icon> 
-                                            </v-btn>
-                                        </v-col>
-                                                                                                                        <v-col >
-                                            <!-- item index -->
-                                            <h4 class="pt-1">
-                                                {{"ITEM NO." + j}}
-                                            </h4>
-                                        </v-col>
-                                    </v-row>
-
-                                    <!--select item type-->
-                                    <v-select 
-                                    v-model="item.type.S" 
-                                    :items="types" 
-                                    label="Type" 
-                                    @change="onSelect(item.type.S, i, j)" />
-                                    
-                                    <!--edit item if icon-->
-                                    <div v-if="item.type.S === 'icon'">
-
-                                        <v-text-field
-                                        v-model="item.content.S"
-                                        label="Name"
-                                        />
-
-                                        <v-text-field
-                                        v-model="item.externalUrl.S"
-                                        label="Link"
-                                        />
-                                        <v-text-field
-                                        class="mb-2"
-                                        v-model="item.icon.S"
-                                        label="icon"
-                                        >
-                                            <template v-slot:append-outer>
-                                                <a 
-                                                class="noDecorationLink" 
-                                                target="_blank"
-                                                href="https://materialdesignicons.com/">
-                                                    <v-icon>
-                                                        mdi-help-circle-outline
-                                                    </v-icon>
-                                                </a>
-                                            </template>
-                                        </v-text-field>
-                                    </div>
-
-                                    <!-- edit images item -->
-                                    <div v-if="item.type.S === 'images'"> 
-                                        <v-text-field
-                                        v-model="item.label.S"
-                                        label="Name"
-                                        />
-                                    </div>
-
-                                    <!-- edit link item -->
-                                    <div v-if="item.type.S === 'simpleLink'">
-                                        <v-text-field
-                                        v-model="item.label.S"
-                                        label="Name"
-                                        />
-
-                                        <v-text-field
-                                        v-model="item.externalUrl.S"
-                                        label="URL"
-                                        />
-                                    </div>
-
-                                </div>
-                            </v-flex>
-
-                            <!-- add new item button-->
-                            <v-btn 
-                            class="ml-5 mb-10" 
-                            outlined
-                            @click="addItem(i)">
-                                <v-icon small>mdi-plus</v-icon> 
-                                Create New Item
-                            </v-btn>
-                            
-                            <v-divider />
-                            
-                            <v-card-actions class="ma-2">
-                                
-                                <!-- delete section button -->
-                                <v-btn 
-                                color="error"
-                                @click="deleteHeader(i)">
-                                    Delete Section
-                                </v-btn>
-                                
-                                <!-- apply changes button-->
-                                <v-btn 
-                                color="success" 
-                                @click="updateItems(i)">
-                                    Apply Changes
-                                </v-btn>
-                            </v-card-actions>
-                        </div>
-                    </v-expand-transition>
-                </v-card>
+            v-for="(section,s) of info"
+            :key="'section' + s">
+                <InfoSection :section="info[s]" :s="s" />
             </v-col>
         </v-row>
     </div>
@@ -202,9 +32,11 @@
 
 <script>
 import { ItemProvider, CategoryProvider } from '../../providers';
+import InfoSection from './infoSection';
 
 export default {
     components: {
+        InfoSection
     },
     data: function() {
         return {
@@ -218,79 +50,78 @@ export default {
         }
     },
     async mounted() {
-        /* eslint-disable no-console */
-        console.log("mounted")
         let provider = new CategoryProvider();
-        console.log(provider)
-        let headers = await provider.getAllCategories()
-        console.log(headers)
         this.$data.info = await provider.getCategoryItems()
-        
-        console.log(this.$data.info.length)
-        //return;
+        provider.getCategoryItems().then(res => {
+            console.log("got em")  //eslint-disable-line
+            console.log(res) //eslint-disable-line
+        })
     },
     computed: {
         totalSections: function() {
-            return this.$data.info.length
+            return this.$data.info && this.$data.info.length
         }
     },
     methods: {
         toggleShow: function(cat_index) {
             this.$data.show = (this.$data.show === cat_index ? -1 : cat_index)
         },
-        addItem: function(i) {
-            let emptyItem = {
+        addItem: function(s) {
+            // add new empty item to section
+            let newItem = {
                 type: {S: "icon"},
-                id: {N: "UNKOWN"},
-                content: {S: ""},
+                id: {N: "UNKNOWN"},
                 externalUrl: {S: ""},
                 icon: {S: ""},
+                label: {S: ""}
             };
-            this.$data.info[i].items.push(emptyItem);
+            this.$data.info[s].items.push(newItem);
         },
-        onSelect: function(type, i, j) {
-            let newItem = { type: {S: type}, id: {N: this.$data.info[i].items[j].id.N}};
-            if (type === 'icon') {
-                newItem.content = {S: ""};
-                newItem.externalUrl = {S: ""};
-                newItem.icon = {S: ""};
-            } else  if (type === 'images') {
-                this.$data.info[i].items[j].type.S = 'images';
-                newItem.label = {S: ""};
+        onSelectType: function(type, i, j) {
+            // change type of item
+
+            let currItem = this.$data.info[i].items[j];
+
+            console.log("onselect - type = " + type) //eslint-disable-line
+
+            let newItem = { 
+                type: {S: type}, 
+                id: {N: currItem.id.N},
+                label: {S: ""},
+                externalUrl: {S: ""},
+                icon: {S: ""}
+            };
+
+            if (type === 'images') {
                 newItem.imageIds = {L: [{N : "1"}]};
-                newItem.content = {S: "images"};
-            } else if (type === 'simpleLink') {
-                newItem.label = {S: ""};
-                newItem.externalUrl = {S: ""};
-            }
+            } 
+
             this.$data.info[i].items.splice(j,1, newItem);
         },
         updateItems: function(i) {
+            // save item changes in a given section
             let itemProvider = new ItemProvider();
             let categoryProvider = new CategoryProvider();
 
             let category = {
                 name: this.$data.info[i].category,
-                items: [],
-            };
-            
-            for (let item of this.$data.info[i].items) {
-                if (item.id.N !== 'UNKOWN') {
-                    category.items.push(item.id.N);
-                    itemProvider.updateItem(item.id.N, item);
-                } else {
-                    let id = this.newId();
-                    item.id = {N: "" + id};
-                    category.items.push("" + id);
-                    itemProvider.updateItem(id, item);
-                }
+                items: []
             }
-            categoryProvider.updateCateory(category);
+
+            this.$data.info[i].items.forEach(item => {
+                if (item.id.N === "UNKNOWN") 
+                    item.id.N = `${this.newId()}`;
+                category.items.push(item.id.N)
+                itemProvider.updateItem(item.id.N, item);
+            }); 
+
+            categoryProvider.updateCategory(category);
         },
         newId: function() {
+            // creates new id
             let max = -1;
-            for (let heading of this.$data.info) {
-                for(let item of heading.items) {
+            for (let section of this.$data.info) {
+                for(let item of section.items) {
                     if (parseInt(item.id.N) > max) {
                         max = parseInt(item.id.N);
                     }
@@ -299,34 +130,33 @@ export default {
             return max + 1;
         },
         deleteItem: function(i, j) {
+            // remove item from section
             this.$data.info[i].items.splice(j, 1);
         },
-        addHeader: function() {
+        addSection: function() {
+            // creates new empty section
             this.$data.info.push({
                 category: '',
-                items: [
-                    {
-                        type: {S: "icon"},
-                        id: {N: "UNKOWN"},
-                        content: {S: ""},
-                        externalUrl: {S: ""},
-                        icon: {S: ""}, 
-                    }
-                ],
+                items: [],
             });
+
+            this.$data.show = this.$data.info.length -1
         },
-        deleteHeader: function(i) {
+        deleteSection: function(i) {
+            // deletes a section
+            let categoryProvider =  new CategoryProvider();
+            let itemProvider = new ItemProvider();
+
             let category = this.$data.info[i].category;
             let items = this.$data.info[i].items;
             this.$data.info.splice(i, 1);
-            let categoryProvider =  new CategoryProvider();
+            
             categoryProvider.deleteCategory(category);
-            let itemProvider = new ItemProvider();
-            for(let item of items) {
-                if( item.id.N !== "UNKNOWN") {
+            
+            items.forEach(item => {
+                if( item.id.N !== "UNKNOWN") 
                     itemProvider.deleteItem(item.id.N);
-                }
-            }
+            })
         }
     }
 }

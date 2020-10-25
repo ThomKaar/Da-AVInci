@@ -164,6 +164,7 @@
 <script>
 import { ItemProvider } from '../../providers';
 import { ImageProvider } from '../../providers'; 
+
 export default {
     components: {
     },
