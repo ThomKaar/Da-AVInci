@@ -12,27 +12,25 @@
           v-bind="attrs"
           v-on="on"
           >
-          <v-icon>mdi-upload</v-icon>
+          <v-icon small class="mr-2">mdi-upload</v-icon>
           Upload New Image
           </v-btn>
       </template>
+
       <v-card 
       flat
       class="mx-auto"
-      outlined >
-        <v-card-title>
-          Upload Image
-        </v-card-title>
+      outlined 
+      >
+        <v-card-title> Upload Image</v-card-title>
 
         <form class="form my-5 mx-10"> 
-
           <v-file-input
             accept="image/*"
             label="Choose Image File"
             prepend-icon="mdi-file-image"
             @change="onFileUpdate"
           />
-
           <v-text-field
             v-model="title"
             prepend-icon="mdi-pencil-outline"
@@ -46,15 +44,15 @@
           outlined
           color="success"
           type="submit"
+          :disabled="!isFile"
           @click.prevent="uploadFiles"
-          :loading="loading"
           >
             Upload
           </v-btn>
           <v-btn
           color="error"
           outlined
-          @click="dialog = false"
+          @click="closeUpload"
           >
             Cancel
           </v-btn>
@@ -66,46 +64,43 @@
 
 
 <script>
-// import vue2Dropzone from 'vue2-dropzone'
-// import 'vue2-dropzone/dist/vue2Dropzone.min.css'
 import Vue from 'vue';
 import FileUpload from 'v-file-upload';
-import vue2Dropzone from 'vue2-dropzone';
-import 'vue2-dropzone/dist/vue2Dropzone.min.css'
 import { ImageProvider, ItemProvider } from '../../providers';
 Vue.use(FileUpload);
-Vue.use(vue2Dropzone);
 
 export default {
-    components: {
-    },
     data: function() {
         return {
           dialog: false,
-          url: 'http://localhost:3000/image/upload',
-          headers: {},
-          fileUploaded: {},
+          url: 'http://18.188.95.224:5000/image/upload',
           title: "",
           fileExtension: "",
-          loading: false,
-          file: {},
+          file: null,
         };
     },
-    methods: {
-      thumbUrl: function(file) {
-        return file.myThumbUrlProperty
+    computed: {
+      isFile: function() {
+        return this.$data.file instanceof File
       },
+    },
+    methods: {
       onFileUpdate: function(file) {
-        this.$data.fileUploaded = file;
+        this.$data.file = file;
         this.$data.title = file.name.split('.')[0];
         this.$data.fileExtension = file.name.split('.')[1];
       },
+      closeUpload: function() {
+          this.$data.dialog = false;
+          this.$data.file = null;
+          this.$data.fileExtension = ""
+          this.$data.title = ""
+      },
       uploadFiles: function() {
-        // this.$data.loading = true;
         // emit event to reload the imageOrganizer once the image is uploaded
         // set loading until the upload is done...
         
-        let file = this.$data.fileUploaded;
+        let file = this.$data.file;
         let title = this.$data.title;
         let contentType = `image/${this.$data.fileExtension}`;
 
@@ -128,11 +123,8 @@ export default {
           });
         };
         reader.readAsBinaryString(file);
-
-        this.$data.dialog = false;
-
-      },
-      mounted: function() {}
+        this.closeUpload()
+      }
     }
 }
 </script>

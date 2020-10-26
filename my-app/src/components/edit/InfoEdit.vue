@@ -6,7 +6,7 @@
             <v-btn 
             outlined
             @click="addSection()">
-                <v-icon>mdi-plus</v-icon>
+                <v-icon small class="mr-2">mdi-plus</v-icon>
                 Create New Section
             </v-btn>
         </v-row>
@@ -19,145 +19,38 @@
         </v-row>
 
         <!--sections-->
-        <v-row>
-            <v-col 
-            cols="12" sm="3" md="4"
-            v-for="(section,s) of info"
-            :key="'section' + s">
-                <InfoSection :section="info[s]" :s="s" />
-            </v-col>
-        </v-row>
+        <InfoSections ref="sections" />
+
     </div>
 </template>
 
 <script>
-import { ItemProvider, CategoryProvider } from '../../providers';
-import InfoSection from './infoSection';
+import { CategoryProvider } from '../../providers';
+import InfoSections from './infoSections';
 
 export default {
-    components: {
-        InfoSection
+    components: { 
+        InfoSections
     },
     data: function() {
         return {
-            info: [],
-            types: [
-                "icon",
-                "images",
-                "simpleLink",
-            ],
-            show: -1,
+            totalSections: 0
         }
     },
     async mounted() {
         let provider = new CategoryProvider();
-        this.$data.info = await provider.getCategoryItems()
-        provider.getCategoryItems().then(res => {
-            console.log("got em")  //eslint-disable-line
-            console.log(res) //eslint-disable-line
-        })
-    },
-    computed: {
-        totalSections: function() {
-            return this.$data.info && this.$data.info.length
-        }
+        this.$data.totalSections = await provider.getCategoryItems()
+            .then(res => {
+                return res.length
+            })
+            .catch(() => {
+                return 0
+            })
     },
     methods: {
-        toggleShow: function(cat_index) {
-            this.$data.show = (this.$data.show === cat_index ? -1 : cat_index)
-        },
-        addItem: function(s) {
-            // add new empty item to section
-            let newItem = {
-                type: {S: "icon"},
-                id: {N: "UNKNOWN"},
-                externalUrl: {S: ""},
-                icon: {S: ""},
-                label: {S: ""}
-            };
-            this.$data.info[s].items.push(newItem);
-        },
-        onSelectType: function(type, i, j) {
-            // change type of item
-
-            let currItem = this.$data.info[i].items[j];
-
-            console.log("onselect - type = " + type) //eslint-disable-line
-
-            let newItem = { 
-                type: {S: type}, 
-                id: {N: currItem.id.N},
-                label: {S: ""},
-                externalUrl: {S: ""},
-                icon: {S: ""}
-            };
-
-            if (type === 'images') {
-                newItem.imageIds = {L: [{N : "1"}]};
-            } 
-
-            this.$data.info[i].items.splice(j,1, newItem);
-        },
-        updateItems: function(i) {
-            // save item changes in a given section
-            let itemProvider = new ItemProvider();
-            let categoryProvider = new CategoryProvider();
-
-            let category = {
-                name: this.$data.info[i].category,
-                items: []
-            }
-
-            this.$data.info[i].items.forEach(item => {
-                if (item.id.N === "UNKNOWN") 
-                    item.id.N = `${this.newId()}`;
-                category.items.push(item.id.N)
-                itemProvider.updateItem(item.id.N, item);
-            }); 
-
-            categoryProvider.updateCategory(category);
-        },
-        newId: function() {
-            // creates new id
-            let max = -1;
-            for (let section of this.$data.info) {
-                for(let item of section.items) {
-                    if (parseInt(item.id.N) > max) {
-                        max = parseInt(item.id.N);
-                    }
-                }
-            }
-            return max + 1;
-        },
-        deleteItem: function(i, j) {
-            // remove item from section
-            this.$data.info[i].items.splice(j, 1);
-        },
         addSection: function() {
-            // creates new empty section
-            this.$data.info.push({
-                category: '',
-                items: [],
-            });
-
-            this.$data.show = this.$data.info.length -1
+            this.$refs.sections.addSection()
         },
-        deleteSection: function(i) {
-            // deletes a section
-            let categoryProvider =  new CategoryProvider();
-            let itemProvider = new ItemProvider();
-
-            let category = this.$data.info[i].category;
-            let items = this.$data.info[i].items;
-            this.$data.info.splice(i, 1);
-            
-            categoryProvider.deleteCategory(category);
-            
-            items.forEach(item => {
-                if( item.id.N !== "UNKNOWN") 
-                    itemProvider.deleteItem(item.id.N);
-            })
-        }
     }
 }
 </script>
@@ -166,10 +59,6 @@ export default {
 
 #edit-info {
     margin: 2.5% 5% 0% 5%
-}
-
-.noDecorationLink{
-    text-decoration: none;
 }
 
 /* 

@@ -43,7 +43,7 @@ exports.uploadImage = async(req, res) => {
         let title = req.body.title;
         var params = {
                 Bucket: 'art-by-makena-kong',
-                Key: "stillLife/" + title + "." + "jpg",
+                Key: "images/" + title + "." + "jpg",
                 Body: Buffer.from(req.body.file, "binary"),
                 ACL: "public-read",
                 ContentType: req.body.contentType

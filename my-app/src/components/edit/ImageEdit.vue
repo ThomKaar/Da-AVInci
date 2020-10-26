@@ -13,13 +13,6 @@ export default {
     components: {
         ImageOrganizer,
         ImageUploader,
-    },
-    data: function() {
-        return {};
-    },
-    methods: {}
+    }
 }
 </script>
-
-<style scoped>
-</style>

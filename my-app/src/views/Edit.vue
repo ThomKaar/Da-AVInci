@@ -51,13 +51,13 @@ export default {
             tab: null,
             pages: [
                 {
+                    title: "gallery",
+                    component: ImageEdit
+                },
+                {
                     title: "sections",
                     component: InfoEdit
                 },
-                {
-                    title: "gallery",
-                    component: ImageEdit
-                }
             ]
         }
     }
