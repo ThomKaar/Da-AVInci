@@ -20,8 +20,9 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
   #app {
     background-color: #Fefefe;
+    cursor: url(https://art-by-makena-kong.s3.us-east-2.amazonaws.com/cursor.png), auto;
   }
 </style>

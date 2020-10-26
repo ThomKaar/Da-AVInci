@@ -62,6 +62,7 @@
                             <v-text-field
                             v-model="section.category"
                             label="Name"
+                            :disabled="section.category === 'about' || section.category === 'contact'"
                             />
 
                             <v-divider />
@@ -276,6 +277,7 @@ export default {
             }); 
 
             categoryProvider.updateCategory(category);
+            this.$emit('update', this.$data.info.length)
         },
         newId: function() {
             // creates new id

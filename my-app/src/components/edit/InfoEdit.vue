@@ -19,7 +19,7 @@
         </v-row>
 
         <!--sections-->
-        <InfoSections ref="sections" />
+        <InfoSections ref="sections" @update="updateSections"/>
 
     </div>
 </template>
@@ -34,12 +34,17 @@ export default {
     },
     data: function() {
         return {
-            totalSections: 0
+            numSections: 0
+        }
+    },
+    computed: {
+        totalSections: function() {
+            return this.$data.numSections
         }
     },
     async mounted() {
         let provider = new CategoryProvider();
-        this.$data.totalSections = await provider.getCategoryItems()
+        this.$data.numSections = await provider.getCategoryItems()
             .then(res => {
                 return res.length
             })
@@ -51,6 +56,9 @@ export default {
         addSection: function() {
             this.$refs.sections.addSection()
         },
+        updateSections: function(total) {
+            this.$data.numSections = total
+        }
     }
 }
 </script>

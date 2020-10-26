@@ -9,7 +9,8 @@
             </a>
          </v-toolbar-title>
          <v-spacer></v-spacer>
-         <a 
+         <btn
+            text
             v-for="(page, i) in pages"
             :key="i"
             :tabindex="i+1"
@@ -18,7 +19,7 @@
             @click="goToPage(page.path)"
          >
             {{page.name}}
-         </a>
+         </btn>
       </v-toolbar>
    </v-card>
 </template>
@@ -51,6 +52,7 @@
 
    .navlink {
       color: #000;
+      cursor: url(https://art-by-makena-kong.s3.us-east-2.amazonaws.com/cursor.png), auto;
    }
 
    .navlink:hover {

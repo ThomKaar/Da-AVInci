@@ -20,9 +20,9 @@
             class="link"
             target="_blank"
             >
-                <v-icon 
+                <v-icon small
                 v-if="item.icon" 
-                class="icon"
+                class="icon mt-1 mr-3"
                 > 
                     {{ item.icon.S }} 
                 </v-icon>
@@ -100,6 +100,7 @@ li {
 a {
   text-decoration: none;
   color: #000;
+    cursor: url(https://art-by-makena-kong.s3.us-east-2.amazonaws.com/cursor.png), pointer;
 }
 .label {
     font-size: 16px;
@@ -107,7 +108,6 @@ a {
     width: 30%;
 }
 .icon {
-    font-size: 18px;
     float: left;
     color: #000;
     margin-top: 0.5%;

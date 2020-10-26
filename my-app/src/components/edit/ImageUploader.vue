@@ -29,6 +29,7 @@
             accept="image/*"
             label="Choose Image File"
             prepend-icon="mdi-file-image"
+            :value="file"
             @change="onFileUpdate"
           />
           <v-text-field
@@ -73,7 +74,6 @@ export default {
     data: function() {
         return {
           dialog: false,
-          url: 'http://18.188.95.224:5000/image/upload',
           title: "",
           fileExtension: "",
           file: null,
@@ -120,10 +120,10 @@ export default {
               title: title,
               url: response.Location,
             });
-          });
+          })
         };
-        reader.readAsBinaryString(file);
         this.closeUpload()
+        reader.readAsBinaryString(file);
       }
     }
 }
