@@ -9,7 +9,7 @@
             </a>
          </v-toolbar-title>
          <v-spacer></v-spacer>
-         <btn
+         <v-btn
             text
             v-for="(page, i) in pages"
             :key="i"
@@ -19,7 +19,7 @@
             @click="goToPage(page.path)"
          >
             {{page.name}}
-         </btn>
+         </v-btn>
       </v-toolbar>
    </v-card>
 </template>

@@ -35,18 +35,19 @@
             </a>
 
             <!-- gallery links -->
-            <a 
-                v-if="!item.externalUrl" 
-                class="link" 
-                @click="imageSelect(item.imageIds)"
-                >
+            <v-btn
+            outlined
+            v-if="!item.externalUrl" 
+            class="btnlink" 
+            @click="imageSelect(item.imageIds, item.label.S)"
+            style="padding: 0"
+            >
                 <h4 
                 v-if="item.label" 
-                class="label"
                 >
                     {{ item.label.S.toLowerCase() }}
                 </h4>
-            </a>
+            </v-btn>
         </li>
     </ul>
     <br>
@@ -67,12 +68,10 @@ export default {
         //anime.js stuff
     },
     methods: {
-        imageSelect(imageIds) {
-            if (imageIds && imageIds.L && imageIds.L.length) {
-                this.$root.$emit('updateGallery', imageIds);
-            }
+        imageSelect(imageIds, label) {
+            if (imageIds && imageIds.L && imageIds.L.length) 
+                this.$root.$emit('updateGallery', imageIds, label);
         }
-        
     }
 }
 </script>
@@ -120,4 +119,22 @@ a {
     color: #A15995;
     text-decoration: underline;
 }
+
+.btnlink {
+    cursor: url(https://art-by-makena-kong.s3.us-east-2.amazonaws.com/cursor.png), auto;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font-size: 16px;
+}
+
+.btnlink:hover {
+    color: #A15995;
+    text-decoration: underline;
+}
+.btnlink:focus {
+    color: #A15995;
+    text-decoration: underline;
+}
+
 </style>

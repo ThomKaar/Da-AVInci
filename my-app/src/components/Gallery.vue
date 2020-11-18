@@ -43,7 +43,7 @@ export default {
         let imageProvider = new ImageProvider();
         let defaultImages = await imageProvider.getDefaultImages();
         this.$data.images = defaultImages;
-        this.$root.$on('updateGallery', async (imageIds) => {
+        /*this.$root.$on('updateGallery', async (imageIds) => {
             let imageProvider = new ImageProvider();
             let numids = [];
             for (let id of imageIds.L) {
@@ -51,7 +51,7 @@ export default {
             }
             let backendImages = await imageProvider.getImagesByCollection(numids);
             this.$data.images = backendImages;
-        });
+        });*/
 
             anime({
             targets: "#wrapper",

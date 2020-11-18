@@ -1,11 +1,11 @@
  <template>
-    <div id="gallery-set">
-        <!-- add title here?-->
+    <div >
+        <h1 class="text-right mb-10">{{collectionName.toUpperCase()}}</h1>
 
-        <div
+        <div class="d-flex justify-start align-start flex-wrap">
+            <div
             v-for="(image) of images"
             :key="image.url.S"
-            :style="{'left': randomNumber(0, 1000)}"
             class="image-box">
                 <v-img
                 class="image"
@@ -14,10 +14,10 @@
                 :src=image.url.S
                 />
                 <p class="image-title text-center">
-                    {{ image.title.S.toLowerCase() }}
+                    {{ image.title.S }}
                 </p>
+            </div>
         </div>
-
     </div>
 </template>
 
@@ -29,6 +29,7 @@ export default {
     data () {
         return {
             images: [],
+            collectionName: ""
         };
     },
     methods: {
@@ -38,51 +39,41 @@ export default {
     },
     async mounted() {        
         let imageProvider = new ImageProvider();
-        let defaultImages = await imageProvider.getDefaultImages();
-        this.$data.images = defaultImages;
-        this.$root.$on('updateGallery', async (imageIds) => {
+        this.$root.$on('updateGallery', async (imageIds,label) => {
             let numids = [];
-            for (let id of imageIds.L) {
+            for (let id of imageIds.L) 
                 numids.push(id.N);
-            }
-            let backendImages = await imageProvider.getImagesByCollection(numids);
-            this.$data.images = backendImages;
+            this.$data.images = await imageProvider.getImagesByCollection(numids);
+            this.$data.collectionName = label
         });
-    
-
     },
 }
 </script>
 
 <style scoped>
 
-
 .image-box {
-}
-
-.image-box:hover .image{
-    max-height: 400px;
+    margin: 20px;
 }
 
 .image-box:hover .image-title{
-    display: block;
+    display: block
+}
+
+
+.image-title {
+    display: none;
 }
 
 .image {
-    width: 100%;
-    float: left;
-    max-height: 300px;
+    min-height: 600px;
+    max-height: 2000px;
+    min-width: 600px;
+    max-width: 2000px;
+    width: auto;
+    height: auto;
 }
 
-.image:hover {
-    max-height: 400px;
-}
-
-.image-title {
-    display:none;
-    color: #000;
-    text-align: "left"
-}
 </style>
 
  
