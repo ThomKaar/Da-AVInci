@@ -2,8 +2,8 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
 import Work from './views/Work.vue';
-import Login from './views/Login.vue';
 import Edit from './views/Edit.vue';
+import NotFound from './views/NotFound.vue';
 
 Vue.use(Router);
 
@@ -22,19 +22,18 @@ const router = new Router({
       component: Work,
     },
     {
-        path: '/login',
-        name: 'login',
-        component: Login,
-    },
-    {
       path: '/editSite',
       name: 'editSite',
       component: Edit,
     },
-    {
-      path: '*',
-      component: Home,
-    },
+    { 
+      path: '/404', 
+      component: NotFound 
+    },  
+    { 
+      path: '*', 
+      redirect: '/404' 
+    },  
   ],
 });
 

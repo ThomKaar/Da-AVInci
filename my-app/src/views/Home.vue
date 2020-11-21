@@ -45,8 +45,7 @@
     text-align: left;
   }
   #summary {
-    font-size: 60px;
-    font-weight: 400;
+    font-family: "TW Cen MT" !important;
   }
   .rainbow {
     font-weight: bolder;

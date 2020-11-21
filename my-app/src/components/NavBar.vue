@@ -1,13 +1,15 @@
 <template>
    <v-card flat>
       <v-toolbar color="elevation-0">
-         <v-toolbar-title class="navtitle">
-            <a class="navlink"
-               tabindex="1"
-               @click="goToPage('/')">
-               {{title}}
-            </a>
-         </v-toolbar-title>
+         <v-img
+            class="mx-2"
+            src="@/assets/black_logo_large_art.svg"
+            max-height="100"
+            max-width="100"
+            contain
+            tabindex="1"
+            @click="goToPage('/')"
+         />
          <v-spacer></v-spacer>
          <v-btn
             text
@@ -29,8 +31,8 @@
     data: () => ({
        title: "ART BY MAKENA KONG",
        pages: [
-          {name: "ABOUT", path: "/"},
-          {name: "WORK", path:"/work"}
+          {name: "about", path: "/"},
+          {name: "work", path:"/work"}
        ],
        activePage: window.location.pathname
     }),
@@ -44,12 +46,6 @@
 </script>
 
 <style scoped>
-   .navtitle {
-      font-size: 25px;
-      font-weight: bolder;
-      margin: 1% 1% 0% 1%;
-   }
-
    .navlink {
       color: #000;
       cursor: url(https://art-by-makena-kong.s3.us-east-2.amazonaws.com/cursor.png), auto;

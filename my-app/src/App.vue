@@ -24,5 +24,11 @@ export default {
   #app {
     background-color: #Fefefe;
     cursor: url(https://art-by-makena-kong.s3.us-east-2.amazonaws.com/cursor.png), auto;
+    font-family: "TW Cen MT"
+  }
+  @font-face {
+    font-family: "TW Cen MT";
+    src: local("TW Cen MT"),
+    url(./assets/fonts/tw-cen-mt-std/TwCenClassMTStd-Regular.otf) format("otf");
   }
 </style>
